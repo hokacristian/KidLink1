@@ -1,0 +1,27 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">KidLink</string>
+    <string name="message_welcome">Aplikasi tempat ramah untuk anak-anak bisa berkomunikasi dengan nyaman. Kidlink hadir bertujuan untuk mencegah anak-anak mendapatkan tindak kekerasan secara verbal dan wadah edukasi agar anak-anak bisa berkomunikasi dengan ramah.</string>
+    <string name="title_welcome">Selamat Datang di KidLink.</string>
+    <string name="welcome_image_description">Gambar Selamat Datang</string>
+    <string name="welcome_text">Selamat Datang di KidLink</string>
+    <string name="description_text">Aplikasi ramah anak untuk saling berkomunikasi dengan nyaman. Kidlink hadir untuk menjaga anak-anak dari tindak kekerasan secara verbal dan sebagai wadah edukasi agar anak-anak bisa berkomunikasi dengan ramah.</string>
+    <string name="login">Masuk</string>
+    <string name="register">Daftar</string>
+    <string name="hastag">#TebarkanKeceriaan   #GenerasiEmasAntiBullying</string>
+    <string name="password_error">Kata Sandi tidak boleh kurang dari 8 karakter</string>
+    <string name="invalidEmail">Email Tidak Valid</string>
+    <string name="regex_email" translatable="false" tools:ignore="TypographyDashes">^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$</string>
+    <string name="textemail">Masukan Email Kamu</string>
+    <string name="textsandi">Masukkan Kata Sandi KidLink Kamu</string>
+    <string name="registsandi">Buat Kata Sandi KidLink Kamu</string>
+    <string name="error_title">Anda Gagal Terdaftar !</string>
+    <string name="success_title">Anda Berhasil Terdaftar !</string>
+    <string name="login_title">Masukkan akun kamu dulu Yuk!</string>
+    <string name="register_title">Buat akun kamu dulu Yuk !</string>
+    <string name="register_nama">Masukkan Nama Kamu</string>
+    <string name="register_ortu">Masukkan Email Ayah atau Ibumu</string>
+    <string name="beranda">Beranda</string>
+    <string name="pesan">Pesan</string>
+    <string name="kiddoz">Kiddoz</string>
+    <string name="profil">Profil</string>
+</resources>

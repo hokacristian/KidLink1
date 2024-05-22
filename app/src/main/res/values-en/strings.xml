@@ -1,0 +1,27 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+        <string name="app_name">KidLink</string>
+        <string name="message_welcome">A friendly app where kids can communicate comfortably. KidLink aims to prevent children from experiencing verbal violence and provides an educational platform for kids to communicate kindly.</string>
+        <string name="title_welcome">Welcome to KidLink.</string>
+        <string name="welcome_image_description">Welcome Image</string>
+        <string name="welcome_text">Welcome to KidLink</string>
+        <string name="description_text">A child-friendly app for comfortable communication. KidLink is here to protect children from verbal violence and serve as an educational platform for kids to communicate kindly.</string>
+        <string name="login">Login</string>
+        <string name="register">Register</string>
+        <string name="hastag">#SpreadJoy   #GoldenGenerationAntiBullying</string>
+        <string name="password_error">Password must be at least 8 characters long</string>
+        <string name="invalidEmail">Invalid Email</string>
+        <string name="regex_email" tools:ignore="TypographyDashes" translatable="false">^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$</string>
+        <string name="textemail">Enter Your Email</string>
+        <string name="textsandi">Enter Your KidLink Password</string>
+        <string name="registsandi">Create Your KidLink Password</string>
+        <string name="error_title">Registration Failed!</string>
+        <string name="success_title">Registration Successful!</string>
+        <string name="login_title">Log in to Your Account!</string>
+        <string name="register_title">Create Your Account!</string>
+        <string name="register_nama">Enter Your Name</string>
+        <string name="register_ortu">Enter Your Parents Email</string>
+        <string name="beranda">Home</string>
+        <string name="pesan" >Message</string>
+        <string name="kiddoz" >Kiddoz</string>
+        <string name="profil">Profile</string>
+    </resources>

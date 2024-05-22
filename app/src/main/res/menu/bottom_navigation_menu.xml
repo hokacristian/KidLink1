@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/nav_beranda"
+        android:icon="@drawable/beranda"
+        android:title="@string/beranda"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/nav_pesan"
+        android:icon="@drawable/pesan"
+        android:title="@string/pesan"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/nav_kiddoz"
+        android:icon="@drawable/kontak"
+        android:title="@string/kiddoz"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/nav_profil"
+        android:icon="@drawable/profil"
+        android:title="@string/profil"
+        app:showAsAction="ifRoom" />
+</menu>
