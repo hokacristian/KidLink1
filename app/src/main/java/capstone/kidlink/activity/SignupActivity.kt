@@ -3,42 +3,38 @@ package capstone.kidlink.activity
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import capstone.kidlink.R
 import capstone.kidlink.databinding.ActivitySignupBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 
 class SignupActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignupBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
-//    private val viewModel by viewModels<SignupViewModel> {
-//        ViewModelFactory.getInstance(this)
-//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignupBinding.inflate(layoutInflater)
         setContentView(binding.root)
         playAnimation()
-//        setupAction()
+
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
         supportActionBar?.apply {
             displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
-//            customView = CustomActionbarBinding.inflate(layoutInflater).root
         }
+
         binding.signupButton.setOnClickListener {
             val name = binding.nameEditText.text.toString().trim()
             val password = binding.passwordEditText.text.toString().trim()
@@ -51,7 +47,6 @@ class SignupActivity : AppCompatActivity() {
                 Toast.makeText(this, "Tolong isi terlebih dahulu email dan password", Toast.LENGTH_SHORT).show()
             }
         }
-
     }
 
     private fun navigateToWelcomeActivityActivity() {
@@ -65,11 +60,43 @@ class SignupActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     val userId = auth.currentUser?.uid ?: ""
                     saveUserToFirestore(userId, name, email, ortuEmail)
-                    navigateToWelcomeActivityActivity()
-                    Toast.makeText(this, "Registration successful", Toast.LENGTH_LONG).show()
+
+                    // Upload default profile photo to Firebase Storage
+                    val storageReference = FirebaseStorage.getInstance().reference
+                        .child("profileImages/$userId/default_photo.png")
+                    val defaultPhotoUri = Uri.parse("android.resource://${packageName}/drawable/default_photo")
+
+                    storageReference.putFile(defaultPhotoUri)
+                        .addOnSuccessListener {
+                            storageReference.downloadUrl.addOnSuccessListener { uri ->
+                                val profileImageUrl = uri.toString()
+                                saveDefaultPhotoUrlToFirestore(userId, profileImageUrl)
+                                navigateToWelcomeActivityActivity()
+                                Toast.makeText(this, "Registration successful", Toast.LENGTH_LONG).show()
+                            }.addOnFailureListener { e ->
+                                Log.e("FirebaseStorage", "Error getting download URL", e)
+                                Toast.makeText(this, "Registration failed: ${e.message}", Toast.LENGTH_LONG).show()
+                            }
+                        }.addOnFailureListener { e ->
+                            Log.e("FirebaseStorage", "Error uploading default photo", e)
+                            Toast.makeText(this, "Registration failed: ${e.message}", Toast.LENGTH_LONG).show()
+                        }
                 } else {
                     Toast.makeText(this, "Registration failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()
                 }
+            }
+    }
+
+    private fun saveDefaultPhotoUrlToFirestore(userId: String, profileImageUrl: String) {
+        val userMap = hashMapOf(
+            "profileImageUrl" to profileImageUrl
+        )
+        db.collection("users").document(userId).update(userMap as Map<String, Any>)
+            .addOnSuccessListener {
+                Log.d("Firestore", "Default photo URL saved successfully")
+            }
+            .addOnFailureListener { e ->
+                Log.e("Firestore", "Error saving default photo URL", e)
             }
     }
 
@@ -108,8 +135,7 @@ class SignupActivity : AppCompatActivity() {
     }
 
     private fun isValidInput(name: String, email: String, password: String): Boolean {
-        return name.isNotBlank() && Patterns.EMAIL_ADDRESS.matcher(email)
-            .matches() && password.length >= MIN_PASSWORD_LENGTH
+        return name.isNotBlank() && Patterns.EMAIL_ADDRESS.matcher(email).matches() && password.length >= MIN_PASSWORD_LENGTH
     }
 
     private fun showLoading(isLoading: Boolean) {
@@ -121,10 +147,7 @@ class SignupActivity : AppCompatActivity() {
     }
 
     private fun showErrorDialog(errorMessage: String) {
-        showDialog(
-            getString(R.string.error_title),
-            errorMessage
-        ) { /* */ }
+        showDialog(getString(R.string.error_title), errorMessage) { /* */ }
     }
 
     private fun showDialog(title: String, message: String, positiveAction: () -> Unit) {

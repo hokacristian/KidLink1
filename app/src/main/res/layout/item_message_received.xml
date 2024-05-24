@@ -3,20 +3,24 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="8dp">
+    android:padding="8dp"
+    android:gravity="start">
 
     <TextView
         android:id="@+id/messageTextView"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Message text"
-        android:textSize="16sp" />
+        android:background="@drawable/sender_shape"
+        android:padding="8dp"
+        android:textColor="@android:color/black" />
 
     <TextView
         android:id="@+id/timestampTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="00:00"
-        android:textSize="12sp" />
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="10sp" />
+
 </LinearLayout>

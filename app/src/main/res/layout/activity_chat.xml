@@ -52,8 +52,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Ketik pesan"
-            android:background="@drawable/default_photo" />
+            android:hint="Ketik pesan" />
 
         <ImageButton
             android:id="@+id/sendButton"
