@@ -8,49 +8,45 @@
 
     <ImageView
         android:id="@+id/imageViewHeader"
-        android:layout_width="368dp"
-        android:layout_height="312dp"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:layout_centerHorizontal="true"
         android:contentDescription="@string/welcome_image_description"
+        android:layout_marginVertical="50dp"
         android:src="@drawable/welcome" />
 
     <TextView
         android:id="@+id/titleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/welcome_text"
-        android:textSize="40sp"
-        android:fontFamily="@font/raleway"
-        android:textColor="@color/black"
         android:layout_below="@id/imageViewHeader"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
+        android:fontFamily="@font/raleway_bold"
         android:gravity="center"
-        android:layout_marginBottom="15dp"/>
+        android:text="@string/welcome_text"
+        android:textColor="@color/black"
+        android:textSize="40sp" />
 
     <TextView
         android:id="@+id/textViewDescription"
-        android:layout_width="match_parent"
+        android:layout_width="360dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/titleTextView"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="16dp"
-        android:fontFamily="@font/opensans1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginVertical="30dp"
+        android:fontFamily="@font/opensans_regular"
         android:gravity="center"
         android:text="@string/description_text"
         android:textColor="@color/black"
-        android:textSize="15sp" />
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/hastag"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/textViewDescription"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="16dp"
-        android:fontFamily="@font/opensans_italic"
+        android:layout_centerHorizontal="true"
+        android:layout_marginVertical="16dp"
+        android:fontFamily="@font/opensans_semibolditalic"
         android:gravity="center"
         android:text="@string/hastag"
         android:textColor="@color/black"
@@ -60,26 +56,28 @@
         android:id="@+id/loginButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/login"
-        android:fontFamily="@font/opensans1"
-        android:textSize="20sp"
-        android:backgroundTint="@color/sky_blue"
         android:layout_below="@id/hastag"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"/>
+        android:layout_marginTop="38dp"
+        android:layout_marginEnd="32dp"
+        android:backgroundTint="@color/sky_blue"
+        android:fontFamily="@font/opensans_semibold"
+        android:text="@string/login"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/signupButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/register"
-        android:fontFamily="@font/opensans1"
-        android:textSize="20sp"
-        android:backgroundTint="@color/pink"
         android:layout_below="@id/loginButton"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"/>
+        android:layout_marginEnd="32dp"
+        android:backgroundTint="@color/pink"
+        android:fontFamily="@font/opensans_semibold"
+        android:text="@string/register"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
 
 </RelativeLayout>
