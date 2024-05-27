@@ -8,9 +8,10 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginVertical="16dp"
         android:contentDescription="@string/welcome_image_description"
         android:src="@drawable/login"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,7 +23,7 @@
         android:id="@+id/titleTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginVertical="32dp"
         android:text="@string/login_title"
         android:textSize="25sp"
         android:fontFamily="@font/raleway_bolditalic"
@@ -30,8 +31,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imageView" />
-
-
 
     <TextView
         android:id="@+id/emailTextView"
@@ -45,7 +44,7 @@
         android:fontFamily="@font/opensans_semibold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleTextView"
-        android:textSize="15dp"
+        android:textSize="16sp"
         tools:alpha="100" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -81,7 +80,7 @@
         android:text="@string/textsandi"
         android:textColor="@color/black"
         android:fontFamily="@font/opensans_semibold"
-        android:textSize="15dp"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailEditTextLayout"
         tools:alpha="100" />
@@ -121,15 +120,30 @@
         android:layout_marginEnd="32dp"
         android:backgroundTint="@color/diamond"
         android:fontFamily="@font/opensans_semibold"
+        android:paddingVertical="16dp"
         android:text="@string/login"
         android:textColor="@color/black"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/passwordEditTextLayout"
-        app:layout_constraintVertical_bias="0.0" />
+         />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="64dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintGuide_percent="0.25"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="64dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.03" />
 
     <ProgressBar
         android:id="@+id/progressBarLogin"
