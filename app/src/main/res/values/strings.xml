@@ -24,4 +24,12 @@
     <string name="pesan">Pesan</string>
     <string name="kiddoz">Kiddoz</string>
     <string name="profil">Profil</string>
+    <string name="username">Nama User</string>
+    <string name="kidlink_logo">Logo KidLink</string>
+    <string name="tvProfilMenuTitleRow1">Profil</string>
+    <string name="tvProfilMenuSubtitleRow1">Ubah Gambar Profil, Hapus Gambar Profil</string>
+    <string name="tvProfilMenuTitleRow2">Bahasa</string>
+    <string name="tvProfilMenuTitleRow3">Keluar</string>
+    <string name="ubahGambarProfil">Ubah Gambar Profil</string>
+    <string name="hapusGambarProfil">Hapus Gambar Profil</string>
 </resources>

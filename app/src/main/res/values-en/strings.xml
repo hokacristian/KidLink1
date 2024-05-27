@@ -24,4 +24,12 @@
         <string name="pesan" >Message</string>
         <string name="kiddoz" >Kiddoz</string>
         <string name="profil">Profile</string>
-    </resources>
+        <string name="username">Username</string>
+        <string name="kidlink_logo">KidLink Logo</string>
+        <string name="tvProfilMenuTitleRow1">Profile</string>
+        <string name="tvProfilMenuSubtitleRow1">"Change Image Profile, Delete Image Profile "</string>
+        <string name="tvProfilMenuTitleRow2">Language</string>
+        <string name="tvProfilMenuTitleRow3">Log Out</string>
+        <string name="ubahGambarProfil">"Change Image Profile "</string>
+        <string name="hapusGambarProfil">Delete Image Profile</string>
+</resources>

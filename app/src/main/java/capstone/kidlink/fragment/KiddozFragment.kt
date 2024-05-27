@@ -9,14 +9,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import capstone.kidlink.activity.ChatActivity
-import capstone.kidlink.databinding.FragmentKontakBinding
+import capstone.kidlink.databinding.FragmentKiddozBinding
 import capstone.kidlink.adapter.UserAdapter
 import capstone.kidlink.data.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
-class KontakFragment : Fragment() {
-    private var _binding: FragmentKontakBinding? = null
+class KiddozFragment : Fragment() {
+    private var _binding: FragmentKiddozBinding? = null
     private val binding get() = _binding!!
     private lateinit var db: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
@@ -27,7 +27,7 @@ class KontakFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentKontakBinding.inflate(inflater, container, false)
+        _binding = FragmentKiddozBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -56,13 +56,13 @@ class KontakFragment : Fragment() {
                         userList.add(user)
                     }
                     userAdapter.notifyDataSetChanged()
-                    Log.d("KontakFragment", "Users loaded: ${userList.size}")
+                    Log.d("KiddozFragment", "Users loaded: ${userList.size}")
                 }
                 .addOnFailureListener { e ->
-                    Log.e("KontakFragment", "Error loading users", e)
+                    Log.e("KiddozFragment", "Error loading users", e)
                 }
         } else {
-            Log.e("KontakFragment", "User not authenticated")
+            Log.e("KiddozFragment", "User not authenticated")
         }
 
         userAdapter.setOnItemClickListener { user ->
