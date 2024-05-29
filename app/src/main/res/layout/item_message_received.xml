@@ -10,7 +10,7 @@
         android:id="@+id/messageTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/sender_shape"
+        android:background="@drawable/receive_shape"
         android:padding="8dp"
         android:textColor="@android:color/black" />
 
