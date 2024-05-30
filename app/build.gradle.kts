@@ -70,6 +70,10 @@ dependencies {
     implementation ("de.hdodenhof:circleimageview:3.1.0")
     implementation ("com.squareup.picasso:picasso:2.8")
 
+    //MEDIA
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.media3.ui)
+    implementation(libs.media3.session)
 
     //FIREBASE
     implementation ("com.google.firebase:firebase-database:21.0.0")
