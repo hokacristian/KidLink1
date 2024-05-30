@@ -14,7 +14,7 @@ import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
-
+    private var activeFragment: Fragment? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -35,15 +35,30 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_profil -> ProfilFragment()
                 else -> BerandaFragment()
             }
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, selectedFragment)
-                .commit()
+
+            if (selectedFragment != activeFragment) { // Hanya ganti jika fragment berbeda
+                activeFragment = selectedFragment
+
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, selectedFragment)
+                    .commit()
+            }
+
             true
         }
 
         // Menampilkan HomeFragment secara default
         if (savedInstanceState == null) {
             bottomNav.selectedItemId = R.id.nav_beranda
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        // Pastikan currentFragment adalah BerandaFragment sebelum memanggil pauseAllPlayers()
+        if (activeFragment is BerandaFragment) {
+            (activeFragment as BerandaFragment).onPause()
         }
     }
 

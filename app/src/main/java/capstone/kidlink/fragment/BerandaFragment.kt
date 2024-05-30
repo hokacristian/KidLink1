@@ -61,11 +61,28 @@ class BerandaFragment : Fragment() {
         binding.viewPager2.getChildAt(0)?.overScrollMode = RecyclerView.OVER_SCROLL_NEVER
     }
 
+
+    override fun onPause() {
+        super.onPause()
+        binding.viewPager2.adapter = null // Lepas adapter dari ViewPager2
+        adapter.pauseAllPlayers()  // Pause semua ExoPlayer di adapter
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (_binding != null) {
+            binding.viewPager2.adapter = adapter // Pasang kembali adapter
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
-        adapter.releaseAllPlayers()
-        binding.viewPager2.adapter = null
-        _binding = null
         binding.viewPager2.unregisterOnPageChangeCallback(adapter.pageChangeCallback)
+        _binding = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        adapter.releaseAllPlayers() // Lepaskan semua ExoPlayer di adapter
     }
 }

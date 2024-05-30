@@ -19,22 +19,22 @@ class VideoAdapter(
     private val videoList: List<Int>,
     private val context: Context,
     private val viewPager2: ViewPager2
-
 ) : RecyclerView.Adapter<VideoAdapter.VideoViewHolder>() {
     private val activeViewHolders = mutableListOf<VideoViewHolder>()
 
-     val pageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
-         override fun onPageSelected(position: Int) {
-             // Hentikan semua video yang aktif
-             activeViewHolders.forEach { it.pauseVideo() }
-         }
+    val pageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
+        override fun onPageSelected(position: Int) {
+            // Hentikan semua video yang aktif
+            activeViewHolders.forEach { it.pauseVideo() }
+        }
     }
 
     init {
         viewPager2.registerOnPageChangeCallback(pageChangeCallback)
     }
 
-    inner class VideoViewHolder(private val binding: VideoPlayerItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class VideoViewHolder(private val binding: VideoPlayerItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         private var player: ExoPlayer? = null
 
         @OptIn(UnstableApi::class)
@@ -47,6 +47,7 @@ class VideoAdapter(
                 exoPlayer.setMediaItem(mediaItem)
                 exoPlayer.prepare()
 
+                // Hapus autoplay saat ViewHolder di-bind
                 exoPlayer.playWhenReady = false
 
                 exoPlayer.addListener(object : Player.Listener {
@@ -73,7 +74,6 @@ class VideoAdapter(
                 }
             }
         }
-
 
         fun releasePlayer() {
             player?.release()
@@ -121,9 +121,14 @@ class VideoAdapter(
 
     override fun getItemCount(): Int = videoList.size
 
+    fun pauseAllPlayers() {
+        activeViewHolders.forEach { it.pauseVideo() }
+    }
+
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
         super.onDetachedFromRecyclerView(recyclerView)
         viewPager2.unregisterOnPageChangeCallback(pageChangeCallback)
+        // Hapus releaseAllPlayers() dari sini
     }
 
     fun releaseAllPlayers() {
