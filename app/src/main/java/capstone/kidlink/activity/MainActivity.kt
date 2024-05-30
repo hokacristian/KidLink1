@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
                 else -> BerandaFragment()
             }
             supportFragmentManager.beginTransaction()
-                .replace(R.id.nav_host_fragment_activity_main, selectedFragment)
+                .replace(R.id.fragment_container, selectedFragment)
                 .commit()
             true
         }
