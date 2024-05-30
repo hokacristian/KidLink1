@@ -14,6 +14,11 @@ import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
+    private var activeFragment: Fragment? = null
+    private lateinit var berandaFragment: BerandaFragment
+    private lateinit var pesanFragment: PesanFragment
+    private lateinit var kiddozFragment: KiddozFragment
+    private lateinit var profilFragment: ProfilFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,9 +40,16 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_profil -> ProfilFragment()
                 else -> BerandaFragment()
             }
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.nav_host_fragment_activity_main, selectedFragment)
-                .commit()
+
+            if (selectedFragment != activeFragment) {
+                activeFragment = selectedFragment
+
+                supportFragmentManager.beginTransaction().apply {
+                    replace(R.id.fragment_container, selectedFragment)
+                    commit()
+                }
+            }
+
             true
         }
 

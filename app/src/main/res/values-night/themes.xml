@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.KidLink" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Base.Theme.KidLink" parent="Theme.Material3.DayNight">
         <!-- Customize your dark theme here. -->
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/rose_quartz_pink</item>

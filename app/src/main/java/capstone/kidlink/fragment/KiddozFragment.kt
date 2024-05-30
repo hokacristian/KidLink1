@@ -8,10 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import capstone.kidlink.R
 import capstone.kidlink.activity.ChatActivity
-import capstone.kidlink.databinding.FragmentKiddozBinding
 import capstone.kidlink.adapter.UserAdapter
 import capstone.kidlink.data.User
+import capstone.kidlink.databinding.FragmentKiddozBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -26,7 +27,7 @@ class KiddozFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentKiddozBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -104,7 +105,7 @@ class KiddozFragment : Fragment() {
                 putExtra("chatRoomId", chatRoomId)
                 putExtra("contactName", user.name)
                 putExtra("contactPhotoUrl", user.profileImageUrl)
-                putExtra("contactEmail", user.email) // Add this line
+                putExtra("contactEmail", user.email)
             }
             startActivity(intent)
         }

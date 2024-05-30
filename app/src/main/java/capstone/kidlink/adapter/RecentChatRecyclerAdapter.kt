@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import capstone.kidlink.activity.ChatActivity
 import capstone.kidlink.R
+import capstone.kidlink.activity.ChatActivity
 import capstone.kidlink.data.Chat
 import capstone.kidlink.data.User
 import capstone.kidlink.utils.FirebaseUtil
@@ -22,7 +22,7 @@ class RecentChatRecyclerAdapter(
 
     inner class ChatViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val profilePic: ImageView = itemView.findViewById(R.id.profile_pic_image_view)
-        val usernameText: TextView = itemView.findViewById(R.id.user_name_text)
+        val usernameText: TextView = itemView.findViewById(R.id.userNameTextView)
         val lastMessageText: TextView = itemView.findViewById(R.id.last_message_text)
         val lastMessageTime: TextView = itemView.findViewById(R.id.last_message_time_text)
     }
@@ -55,6 +55,7 @@ class RecentChatRecyclerAdapter(
                 putExtra("chatRoomId", chat.userId)
                 putExtra("contactName", holder.usernameText.text.toString())
                 putExtra("contactPhotoUrl", chat.profileImageUrl)
+                putExtra("contactEmail", chat.participants.find { it != userId }) // Ensure this is correct
             }
             context.startActivity(intent)
         }
