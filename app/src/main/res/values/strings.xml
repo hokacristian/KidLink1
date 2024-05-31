@@ -24,4 +24,17 @@
     <string name="pesan">Pesan</string>
     <string name="kiddoz">Kiddoz</string>
     <string name="profil">Profil</string>
+    <string name="username">Nama User</string>
+    <string name="kidlink_logo">Logo KidLink</string>
+    <string name="tvProfilMenuTitleRow1">Profil</string>
+    <string name="tvProfilMenuSubtitleRow1">Ubah Gambar Profil, Hapus Gambar Profil</string>
+    <string name="tvProfilMenuTitleRow2">Bahasa</string>
+    <string name="tvProfilMenuTitleRow3">Keluar</string>
+    <string name="ubahGambarProfil">Ubah Gambar Profil</string>
+    <string name="hapusGambarProfil">Hapus Gambar Profil</string>
+    <string name="pwa_content_description">Peringatan Popup Warning</string>
+    <string name="popup_warning_alert">Pesan Gagal terkirim!, Gunakanlah bahasa yang baik dan benar</string>
+    <string name="logout_question_message">Apakah kamu sudah yakin ingin keluar ?</string>
+    <string name="yes">Ya</string>
+    <string name="no">Tidak</string>
 </resources>

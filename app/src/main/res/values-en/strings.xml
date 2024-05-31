@@ -24,4 +24,17 @@
         <string name="pesan" >Message</string>
         <string name="kiddoz" >Kiddoz</string>
         <string name="profil">Profile</string>
-    </resources>
+        <string name="username">Username</string>
+        <string name="kidlink_logo">KidLink Logo</string>
+        <string name="tvProfilMenuTitleRow1">Profile</string>
+        <string name="tvProfilMenuSubtitleRow1">"Change Image Profile, Delete Image Profile "</string>
+        <string name="tvProfilMenuTitleRow2">Language</string>
+        <string name="tvProfilMenuTitleRow3">Log Out</string>
+        <string name="ubahGambarProfil">"Change Image Profile "</string>
+        <string name="hapusGambarProfil">Delete Image Profile</string>
+    <string name="pwa_content_description">Popup Warning Alert</string>
+        <string name="popup_warning_alert">Message failed to deliver!, Use good and correct language</string>
+    <string name="logout_question_message">Are you sure want to logout ?</string>
+    <string name="yes">Ya</string>
+        <string name="no">Tidak</string>
+</resources>

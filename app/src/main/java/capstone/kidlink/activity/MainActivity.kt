@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import capstone.kidlink.R
 import capstone.kidlink.fragment.BerandaFragment
-import capstone.kidlink.fragment.KontakFragment
+import capstone.kidlink.fragment.KiddozFragment
 import capstone.kidlink.fragment.PesanFragment
 import capstone.kidlink.fragment.ProfilFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -14,6 +14,11 @@ import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
+    private var activeFragment: Fragment? = null
+    private lateinit var berandaFragment: BerandaFragment
+    private lateinit var pesanFragment: PesanFragment
+    private lateinit var kiddozFragment: KiddozFragment
+    private lateinit var profilFragment: ProfilFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,13 +36,20 @@ class MainActivity : AppCompatActivity() {
             val selectedFragment: Fragment = when (item.itemId) {
                 R.id.nav_beranda -> BerandaFragment()
                 R.id.nav_pesan -> PesanFragment()
-                R.id.nav_kiddoz -> KontakFragment()
+                R.id.nav_kiddoz -> KiddozFragment()
                 R.id.nav_profil -> ProfilFragment()
                 else -> BerandaFragment()
             }
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, selectedFragment)
-                .commit()
+
+            if (selectedFragment != activeFragment) {
+                activeFragment = selectedFragment
+
+                supportFragmentManager.beginTransaction().apply {
+                    replace(R.id.fragment_container, selectedFragment)
+                    commit()
+                }
+            }
+
             true
         }
 

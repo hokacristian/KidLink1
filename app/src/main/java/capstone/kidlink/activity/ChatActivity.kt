@@ -28,7 +28,7 @@ class ChatActivity : AppCompatActivity() {
         db = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
 
-        val chatRoomId = intent.getStringExtra("chatRoomId")
+        val chatRoomId = intent.getStringExtra("chatRoomId") ?: return
         val contactName = intent.getStringExtra("contactName")
         val contactPhotoUrl = intent.getStringExtra("contactPhotoUrl")
         val currentUserId = auth.currentUser?.uid
@@ -47,7 +47,7 @@ class ChatActivity : AppCompatActivity() {
             val messageText = binding.messageEditText.text.toString()
             if (messageText.isNotEmpty()) {
                 val message = Message(senderId = currentUserId, messageText = messageText, censor = "UNSET")
-                db.collection("chatRooms").document(chatRoomId!!).collection("messages").add(message)
+                db.collection("chatRooms").document(chatRoomId).collection("messages").add(message)
                     .addOnSuccessListener {
                         binding.messageEditText.text.clear()
 
@@ -77,7 +77,7 @@ class ChatActivity : AppCompatActivity() {
             }
         }
 
-        db.collection("chatRooms").document(chatRoomId!!)
+        db.collection("chatRooms").document(chatRoomId)
             .collection("messages")
             .orderBy("timestamp", Query.Direction.ASCENDING)
             .addSnapshotListener { snapshots, _ ->
@@ -88,7 +88,9 @@ class ChatActivity : AppCompatActivity() {
                         messageList.add(message)
                     }
                     messageAdapter.notifyDataSetChanged()
+                    binding.chatRecyclerView.scrollToPosition(messageList.size - 1) // Scroll to bottom
                 }
             }
     }
+
 }

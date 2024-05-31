@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_beranda">
+
+    <fragment
+        android:id="@+id/nav_beranda"
+        android:name="capstone.kidlink.fragment.BerandaFragment"
+        android:label="@string/beranda"
+        tools:layout="@layout/fragment_beranda" />
+
+    <fragment
+        android:id="@+id/nav_pesan"
+        android:name="capstone.kidlink.fragment.PesanFragment"
+        android:label="@string/beranda"
+        tools:layout="@layout/fragment_pesan" />
+
+    <fragment
+        android:id="@+id/nav_kiddoz"
+        android:name="capstone.kidlink.fragment.KiddozFragment"
+        android:label="@string/kiddoz"
+        tools:layout="@layout/fragment_kiddoz" />
+
+    <fragment
+        android:id="@+id/nav_profil"
+        android:name="capstone.kidlink.fragment.ProfilFragment"
+        android:label="@string/profil"
+        tools:layout="@layout/fragment_profil"
+        />
+</navigation>

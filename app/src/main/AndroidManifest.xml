@@ -6,17 +6,17 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@drawable/logoasikk"
+        android:icon="@drawable/logo_kidlink"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/logoasikk"
+        android:roundIcon="@drawable/logo_kidlink"
         android:supportsRtl="true"
         android:theme="@style/Theme.KidLink"
         tools:targetApi="31">
         <activity
-            android:name=".activity.ChatActivity"
+            android:name=".activity.DetailProfilActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.BerandaActivity"
+            android:name=".activity.ChatActivity"
             android:exported="false" />
         <activity
             android:name=".activity.SignupActivity"

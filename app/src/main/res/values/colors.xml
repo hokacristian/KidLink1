@@ -2,8 +2,17 @@
 <resources>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
-    <color name="dark_gray">#686868</color>
-    <color name="sky_blue">#B5E5FF</color>
-    <color name="pink">#F9ABE7</color>
-
+    <color name="gray">#808080</color>
+    <color name="diamond">#B5E5FF</color>
+    <color name="lavender_rose">#F9ABE7</color>
+    <color name="mauve">#E1A9F6</color>
+    <color name="soap">#D1BBF9</color>
+    <color name="lavender_blue">#C6C7FF</color>
+    <color name="rose_quartz_pink">#A85294</color>
+    <color name="purpureus">#9F53A6</color>
+    <color name="dark_lavender">#7C4D96</color>
+    <color name="glaucous">#6979B6</color>
+    <color name="cyan_azure">#5485B8</color>
+    <color name="turkish_rose">#AF7B7B</color>
+    <color name="red">#FF0000</color>
 </resources>

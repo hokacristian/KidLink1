@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
@@ -12,7 +13,8 @@
         android:layout_height="wrap_content"
         android:background="@drawable/sender_shape"
         android:padding="8dp"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/black"
+        tools:text="Halo ini saya"/>
 
     <TextView
         android:id="@+id/timestampTextView"

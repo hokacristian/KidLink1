@@ -51,12 +51,15 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.firebase.firestore)
+    implementation(libs.androidx.navigation.fragment)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
     //NAVIGASI
-    implementation ("com.google.android.material:material:1.12.0")
+    implementation(libs.material)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
 
     //CAROUSEL
     implementation ("androidx.viewpager2:viewpager2:1.1.0")
@@ -68,6 +71,10 @@ dependencies {
     implementation ("de.hdodenhof:circleimageview:3.1.0")
     implementation ("com.squareup.picasso:picasso:2.8")
 
+    //MEDIA
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.media3.ui)
+    implementation(libs.media3.session)
 
     //FIREBASE
     implementation ("com.google.firebase:firebase-database:21.0.0")
