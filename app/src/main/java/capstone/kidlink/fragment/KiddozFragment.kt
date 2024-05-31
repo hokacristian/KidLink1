@@ -1,5 +1,6 @@
 package capstone.kidlink.fragment
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -8,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import capstone.kidlink.R
 import capstone.kidlink.activity.ChatActivity
 import capstone.kidlink.adapter.UserAdapter
 import capstone.kidlink.data.User
@@ -32,6 +32,7 @@ class KiddozFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

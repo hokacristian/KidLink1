@@ -9,7 +9,7 @@ data class Message(
     )
 
 data class Chat(
-    val chatRoomId: String = "", // Tambahkan ini
+    val chatRoomId: String = "",
     val userId: String = "",
     val userName: String = "",
     val lastMessage: String = "",

@@ -11,7 +11,6 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import capstone.kidlink.databinding.ActivityLoginBinding
-import capstone.kidlink.fragment.BerandaFragment
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {

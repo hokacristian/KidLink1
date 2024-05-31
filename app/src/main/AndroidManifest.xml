@@ -19,9 +19,6 @@
             android:name=".activity.ChatActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.BerandaActivity"
-            android:exported="false" />
-        <activity
             android:name=".activity.SignupActivity"
             android:exported="false" />
         <activity

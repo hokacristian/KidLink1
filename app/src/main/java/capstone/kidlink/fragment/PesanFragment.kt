@@ -1,6 +1,6 @@
 package capstone.kidlink.fragment
 
-import android.content.Intent
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import capstone.kidlink.R
-import capstone.kidlink.activity.ChatActivity
 import capstone.kidlink.adapter.RecentChatRecyclerAdapter
 import capstone.kidlink.data.Chat
 import com.google.firebase.auth.FirebaseAuth
@@ -42,12 +41,13 @@ class PesanFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
 
         chatList = mutableListOf()
-        adapter = RecentChatRecyclerAdapter(chatList, requireContext(), auth) // Pass auth here
+        adapter = RecentChatRecyclerAdapter(chatList, requireContext(), auth)
         recyclerView.adapter = adapter
 
         loadChats()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun loadChats() {
         val currentUserEmail = auth.currentUser?.email ?: return
         db.collection("chatRooms")
@@ -63,7 +63,6 @@ class PesanFragment : Fragment() {
                     chatList.clear()
                     for (document in snapshots.documents) {
                         val chat = document.toObject(Chat::class.java)
-                        Log.d("PesanFragment", "Chat loaded: $chat")
                         if (chat != null && chat.userId.isNotEmpty()) {
                             chatList.add(chat)
                         }
