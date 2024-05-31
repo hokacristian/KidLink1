@@ -5,6 +5,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import capstone.kidlink.R
 import capstone.kidlink.adapter.MessageAdapter
 import capstone.kidlink.data.Message
 import capstone.kidlink.databinding.ActivityChatBinding

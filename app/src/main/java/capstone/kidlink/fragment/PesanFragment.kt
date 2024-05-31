@@ -42,7 +42,7 @@ class PesanFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
 
         chatList = mutableListOf()
-        adapter = RecentChatRecyclerAdapter(chatList, requireContext())
+        adapter = RecentChatRecyclerAdapter(chatList, requireContext(), auth) // Pass auth here
         recyclerView.adapter = adapter
 
         loadChats()

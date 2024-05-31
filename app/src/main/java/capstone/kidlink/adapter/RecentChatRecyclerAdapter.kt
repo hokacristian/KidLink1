@@ -2,6 +2,7 @@ package capstone.kidlink.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,17 +15,20 @@ import capstone.kidlink.data.Chat
 import capstone.kidlink.data.User
 import capstone.kidlink.utils.FirebaseUtil
 import com.bumptech.glide.Glide
+import com.google.firebase.auth.FirebaseAuth
 
 class RecentChatRecyclerAdapter(
     private val chatList: List<Chat>,
-    private val context: Context
+    private val context: Context,
+    private var auth: FirebaseAuth
+
 ) : RecyclerView.Adapter<RecentChatRecyclerAdapter.ChatViewHolder>() {
 
     inner class ChatViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val profilePic: ImageView = itemView.findViewById(R.id.profile_pic_image_view)
+        val profilePic: ImageView = itemView.findViewById(R.id.userImageView)
         val usernameText: TextView = itemView.findViewById(R.id.userNameTextView)
-        val lastMessageText: TextView = itemView.findViewById(R.id.last_message_text)
-        val lastMessageTime: TextView = itemView.findViewById(R.id.last_message_time_text)
+        val lastMessageText: TextView = itemView.findViewById(R.id.lastMessageTextView)
+        val lastMessageTime: TextView = itemView.findViewById(R.id.timestampTextView)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatViewHolder {
@@ -34,32 +38,51 @@ class RecentChatRecyclerAdapter(
 
     override fun onBindViewHolder(holder: ChatViewHolder, position: Int) {
         val chat = chatList[position]
-        val userId = chat.userId
-        if (userId.isNotEmpty()) {
-            FirebaseUtil.getUserDetails(userId)
+        val currentUserEmail = auth.currentUser?.email
+        val otherParticipant = chat.participants.find { it != currentUserEmail }
+
+        if (otherParticipant != null) {
+            FirebaseUtil.getUserDetails(otherParticipant)
                 .addOnSuccessListener { documentSnapshot ->
                     val user = documentSnapshot.toObject(User::class.java)
-                    holder.usernameText.text = user?.name ?: "Unknown User"
-                    Glide.with(context).load(user?.profileImageUrl).into(holder.profilePic)
+                    if (user != null) {
+                        holder.usernameText.text = user.name
+                        // Tambahkan pengecekan null untuk profileImageUrl
+                        if (user.profileImageUrl != null && user.profileImageUrl.isNotEmpty()) {
+                            Glide.with(context).load(user.profileImageUrl).into(holder.profilePic)
+                        } else {
+                            // Jika tidak ada URL, muat gambar default
+                            Glide.with(context).load(R.drawable.default_photo).into(holder.profilePic)
+                        }
+                    } else {
+                        // Jika data user null, tampilkan user unknown dan gambar default
+                        if (user != null) {
+                            holder.usernameText.text = user.name
+                        }
+                        Glide.with(context).load(R.drawable.default_photo).into(holder.profilePic)
+                    }
+
+                    holder.itemView.setOnClickListener {
+                        val intent = Intent(context, ChatActivity::class.java).apply {
+                            putExtra("chatRoomId", chat.chatRoomId)
+                            putExtra("contactName", user?.name)
+                            putExtra("contactPhotoUrl", user?.profileImageUrl)
+                            putExtra("contactEmail", otherParticipant)
+                        }
+                        context.startActivity(intent)
+                    }
                 }
                 .addOnFailureListener { e ->
                     holder.usernameText.text = "Unknown User"
+                    Glide.with(context).load(R.drawable.default_photo).into(holder.profilePic)
+                    Log.e("RecentChatAdapter", "Error retrieving user details", e)
                 }
         }
 
         holder.lastMessageText.text = chat.lastMessage
         holder.lastMessageTime.text = FirebaseUtil.timestampToString(chat.timestamp)
-
-        holder.itemView.setOnClickListener {
-            val intent = Intent(context, ChatActivity::class.java).apply {
-                putExtra("chatRoomId", chat.userId)
-                putExtra("contactName", holder.usernameText.text.toString())
-                putExtra("contactPhotoUrl", chat.profileImageUrl)
-                putExtra("contactEmail", chat.participants.find { it != userId }) // Ensure this is correct
-            }
-            context.startActivity(intent)
-        }
     }
+
 
     override fun getItemCount(): Int {
         return chatList.size

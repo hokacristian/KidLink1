@@ -3,10 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="8dp">
+    android:padding="16dp"
+    android:clickable="true"
+    android:focusable="true">
 
     <ImageView
-        android:id="@+id/profile_pic_image_view"
+        android:id="@+id/userImageView"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginEnd="8dp"
@@ -26,19 +28,17 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/last_message_text"
+            android:id="@+id/lastMessageTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Last message"
             android:textColor="@android:color/darker_gray" />
-
     </LinearLayout>
 
     <TextView
-        android:id="@+id/last_message_time_text"
+        android:id="@+id/timestampTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="09:41"
         android:textColor="@android:color/darker_gray" />
-
 </LinearLayout>

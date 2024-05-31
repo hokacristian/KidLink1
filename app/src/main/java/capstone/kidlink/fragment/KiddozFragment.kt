@@ -83,6 +83,7 @@ class KiddozFragment : Fragment() {
                 if (!document.exists()) {
                     // Create the chat room document with the required fields
                     val chatRoomData = mapOf(
+                        "chatRoomId" to chatRoomId, // Tambahkan ini
                         "lastMessage" to "",
                         "lastMessageTimestamp" to System.currentTimeMillis(),
                         "participants" to listOf(currentUserEmail, user.email),
