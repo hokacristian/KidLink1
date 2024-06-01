@@ -13,16 +13,17 @@
         android:layout_height="wrap_content"
         android:background="@drawable/sender_shape"
         android:padding="8dp"
+        android:textSize="16sp"
         android:textColor="@android:color/black"
-        tools:text="Halo ini saya"/>
+        tools:text="Halo ini Alpha"/>
 
     <TextView
         android:id="@+id/timestampTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
+        android:paddingHorizontal="8dp"
         android:textColor="@android:color/darker_gray"
-        android:textSize="10sp" />
+        tools:text="09.41"
+        android:textSize="12sp" />
 
 </LinearLayout>

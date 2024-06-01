@@ -37,4 +37,8 @@
     <string name="logout_question_message">Apakah kamu sudah yakin ingin keluar ?</string>
     <string name="yes">Ya</string>
     <string name="no">Tidak</string>
+    <string name="back_button">Back Button</string>
+    <string name="type_a_message">Ketik pesan</string>
+    <string name="Send_Button">Tombol Kirim</string>
+    <string name="user_profile_image">Gambar Profil Pengguna</string>
 </resources>

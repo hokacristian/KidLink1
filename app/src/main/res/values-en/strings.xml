@@ -35,6 +35,10 @@
     <string name="pwa_content_description">Popup Warning Alert</string>
         <string name="popup_warning_alert">Message failed to deliver!, Use good and correct language</string>
     <string name="logout_question_message">Are you sure want to logout ?</string>
-    <string name="yes">Ya</string>
-        <string name="no">Tidak</string>
+    <string name="yes">Yes</string>
+        <string name="no">No</string>
+        <string name="back_button">Back Button</string>
+        <string name="type_a_message">Type a message</string>
+        <string name="Send_Button">Tombol Kirim</string>
+    <string name="user_profile_image">User Profile Image</string>
 </resources>

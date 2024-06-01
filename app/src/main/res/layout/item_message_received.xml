@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="8dp"
-    android:gravity="start">
+    android:gravity="start"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
         android:id="@+id/messageTextView"
@@ -12,7 +13,10 @@
         android:layout_height="wrap_content"
         android:background="@drawable/receive_shape"
         android:padding="8dp"
-        android:textColor="@android:color/black" />
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        tools:text="Halo ini Beta"
+        />
 
     <TextView
         android:id="@+id/timestampTextView"
@@ -21,6 +25,7 @@
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
         android:textColor="@android:color/darker_gray"
-        android:textSize="10sp" />
+        tools:text="09.41"
+        android:textSize="12sp" />
 
 </LinearLayout>
