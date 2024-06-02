@@ -41,4 +41,6 @@
     <string name="type_a_message">Ketik pesan</string>
     <string name="Send_Button">Tombol Kirim</string>
     <string name="user_profile_image">Gambar Profil Pengguna</string>
+    <string name="last_message">Pesan Terakhir</string>
+    <string name="timestamp">09:41</string>
 </resources>

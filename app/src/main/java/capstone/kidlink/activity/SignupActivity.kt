@@ -9,7 +9,6 @@ import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import capstone.kidlink.R
@@ -31,9 +30,8 @@ class SignupActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
-        supportActionBar?.apply {
-            displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
-        }
+        // Menyembunyikan Action Bar
+        supportActionBar?.hide()
 
         binding.signupButton.setOnClickListener {
             val name = binding.nameEditText.text.toString().trim()

@@ -39,6 +39,7 @@ class BerandaFragment : Fragment() {
         init()
         setUpTransformer()
         binding.viewPager2.registerOnPageChangeCallback(adapter.pageChangeCallback)
+
     }
 
     private fun setUpTransformer() {

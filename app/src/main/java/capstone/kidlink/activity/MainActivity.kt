@@ -2,6 +2,7 @@ package capstone.kidlink.activity
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import capstone.kidlink.R
@@ -23,6 +24,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        //Menampilkan Custom Action Bar
+        supportActionBar?.apply {
+            displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
+            setCustomView(R.layout.custom_actionbar)
+        }
+
         auth = FirebaseAuth.getInstance()
 
         // Redirect to login if not authenticated

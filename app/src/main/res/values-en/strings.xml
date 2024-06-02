@@ -41,4 +41,5 @@
         <string name="type_a_message">Type a message</string>
         <string name="Send_Button">Tombol Kirim</string>
     <string name="user_profile_image">User Profile Image</string>
+    <string name="last_message">Last message</string>
 </resources>

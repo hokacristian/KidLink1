@@ -3,8 +3,10 @@ package capstone.kidlink.activity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import capstone.kidlink.R
 import capstone.kidlink.adapter.MessageAdapter
 import capstone.kidlink.data.Message
 import capstone.kidlink.databinding.ActivityChatBinding
@@ -24,6 +26,8 @@ class ChatActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityChatBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        // Menyembunyikan Action Bar
+        supportActionBar?.hide()
 
         db = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
