@@ -4,12 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toBottomOf="parent"
-    app:layout_constraintBottom_toBottomOf="parent"
     tools:context=".fragment.ProfilFragment">
-
 
     <LinearLayout
         android:id="@+id/profiledetail_area"
@@ -19,20 +14,20 @@
         android:gravity="center"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        >
-        
+        app:layout_constraintEnd_toEndOf="parent">
+
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/img_item_photo"
+            android:id="@+id/userImageView"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_margin="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@tools:sample/avatars"
-            />
+            tools:src="@drawable/default_photo" />
+
         <TextView
+            android:id="@+id/userNameTextView"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginStart="18dp"
@@ -42,8 +37,7 @@
             android:textAlignment="center"
             android:text="@string/username"
             android:textSize="24sp"
-            android:fontFamily="@font/opensans_semibold"
-            />
+            android:fontFamily="@font/opensans_semibold" />
     </LinearLayout>
 
     <LinearLayout
@@ -51,24 +45,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/profiledetail_area"
-        >
+        app:layout_constraintTop_toBottomOf="@id/profiledetail_area">
+
         <LinearLayout
             android:id="@+id/profilButtonMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="24dp"
             android:layout_gravity="center_vertical"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
+
             <TextView
                 android:id="@+id/profilTextMenu"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textSize="24sp"
                 android:fontFamily="@font/opensans_semibold"
-                android:text="@string/tvProfilMenuTitleRow1"
-                />
+                android:text="@string/tvProfilMenuTitleRow1" />
+
             <TextView
                 android:id="@+id/profilTextSubMenu"
                 android:layout_width="match_parent"
@@ -76,9 +70,9 @@
                 android:textSize="14sp"
                 android:fontFamily="@font/opensans_semibold"
                 android:textColor="@color/gray"
-                android:text="@string/tvProfilMenuSubtitleRow1"
-                />
+                android:text="@string/tvProfilMenuSubtitleRow1" />
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/bahasaButtonMenu"
             android:layout_width="match_parent"
@@ -86,17 +80,17 @@
             android:padding="24dp"
             android:orientation="vertical"
             android:layout_gravity="center_vertical"
-            app:layout_constraintTop_toBottomOf="@id/profilButtonMenu"
-            >
+            app:layout_constraintTop_toBottomOf="@id/profilButtonMenu">
+
             <TextView
                 android:id="@+id/bahasaTextMenu"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textSize="24sp"
                 android:fontFamily="@font/opensans_semibold"
-                android:text="@string/tvProfilMenuTitleRow2"
-                />
+                android:text="@string/tvProfilMenuTitleRow2" />
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/keluarButtonMenu"
             android:layout_width="match_parent"
@@ -104,16 +98,15 @@
             android:padding="24dp"
             android:orientation="vertical"
             android:layout_gravity="center_vertical"
-            app:layout_constraintTop_toBottomOf="@id/profilButtonMenu"
-            >
+            app:layout_constraintTop_toBottomOf="@id/profilButtonMenu">
+
             <TextView
                 android:id="@+id/keluarTextMenu"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textSize="24sp"
                 android:fontFamily="@font/opensans_semibold"
-                android:text="@string/tvProfilMenuTitleRow3"
-                />
+                android:text="@string/tvProfilMenuTitleRow3" />
         </LinearLayout>
     </LinearLayout>
 

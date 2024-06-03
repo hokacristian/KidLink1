@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -6,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.DetailProfilActivity">
-
 
     <LinearLayout
         android:id="@+id/profiledetail_area"
@@ -16,19 +14,18 @@
         android:gravity="center"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        >
+        app:layout_constraintEnd_toEndOf="parent">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/img_item_photo"
+            android:id="@+id/userImageView"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_margin="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@tools:sample/avatars"
-            />
+            tools:src="@drawable/default_photo"/>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="48dp"
@@ -39,8 +36,7 @@
             android:textAlignment="center"
             android:text="@string/username"
             android:textSize="24sp"
-            android:fontFamily="@font/opensans_semibold"
-            />
+            android:fontFamily="@font/opensans_semibold" />
     </LinearLayout>
 
     <Button

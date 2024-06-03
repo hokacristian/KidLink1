@@ -57,9 +57,6 @@ class SignupActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     val userId = auth.currentUser?.uid ?: ""
-                    saveUserToFirestore(userId, name, email, ortuEmail)
-
-                    // Upload default profile photo to Firebase Storage
                     val storageReference = FirebaseStorage.getInstance().reference
                         .child("profileImages/$userId/default_photo.png")
                     val defaultPhotoUri = Uri.parse("android.resource://${packageName}/drawable/default_photo")
@@ -68,7 +65,7 @@ class SignupActivity : AppCompatActivity() {
                         .addOnSuccessListener {
                             storageReference.downloadUrl.addOnSuccessListener { uri ->
                                 val profileImageUrl = uri.toString()
-                                saveDefaultPhotoUrlToFirestore(userId, profileImageUrl)
+                                saveUserToFirestore(userId, name, email, ortuEmail, profileImageUrl)
                                 navigateToWelcomeActivityActivity()
                                 Toast.makeText(this, "Registration successful", Toast.LENGTH_LONG).show()
                             }.addOnFailureListener { e ->
@@ -85,25 +82,13 @@ class SignupActivity : AppCompatActivity() {
             }
     }
 
-    private fun saveDefaultPhotoUrlToFirestore(userId: String, profileImageUrl: String) {
-        val userMap = hashMapOf(
-            "profileImageUrl" to profileImageUrl
-        )
-        db.collection("users").document(userId).update(userMap as Map<String, Any>)
-            .addOnSuccessListener {
-                Log.d("Firestore", "Default photo URL saved successfully")
-            }
-            .addOnFailureListener { e ->
-                Log.e("Firestore", "Error saving default photo URL", e)
-            }
-    }
-
-    private fun saveUserToFirestore(userId: String, name: String, email: String, ortuEmail: String) {
+    private fun saveUserToFirestore(userId: String, name: String, email: String, ortuEmail: String, profileImageUrl: String) {
         val userMap = hashMapOf(
             "name" to name,
             "email" to email,
             "parentEmail" to ortuEmail,
-            "userId" to userId
+            "userId" to userId,
+            "profileImageUrl" to profileImageUrl
         )
         db.collection("users").document(userId).set(userMap)
             .addOnSuccessListener {

@@ -16,10 +16,10 @@ import com.google.firebase.auth.FirebaseAuth
 class MainActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private var activeFragment: Fragment? = null
-    private lateinit var berandaFragment: BerandaFragment
-    private lateinit var pesanFragment: PesanFragment
-    private lateinit var kiddozFragment: KiddozFragment
-    private lateinit var profilFragment: ProfilFragment
+
+    companion object {
+        const val REQUEST_CODE_CHAT_ACTIVITY = 1
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +64,17 @@ class MainActivity : AppCompatActivity() {
         // Menampilkan HomeFragment secara default
         if (savedInstanceState == null) {
             bottomNav.selectedItemId = R.id.nav_beranda
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_CHAT_ACTIVITY && resultCode == RESULT_OK) {
+            // Menampilkan PesanFragment setelah kembali dari ChatActivity
+            supportFragmentManager.beginTransaction().apply {
+                replace(R.id.fragment_container, PesanFragment())
+                commit()
+            }
         }
     }
 

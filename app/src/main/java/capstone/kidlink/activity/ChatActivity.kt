@@ -3,7 +3,6 @@ package capstone.kidlink.activity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import capstone.kidlink.R
@@ -95,6 +94,10 @@ class ChatActivity : AppCompatActivity() {
                     binding.chatRecyclerView.scrollToPosition(messageList.size - 1) // Scroll to bottom
                 }
             }
-    }
 
+        binding.backButton.setOnClickListener {
+            setResult(RESULT_OK)
+            finish()
+        }
+    }
 }
