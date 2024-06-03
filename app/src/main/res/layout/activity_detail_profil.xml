@@ -1,73 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/detailProfilActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.DetailProfilActivity">
 
-    <LinearLayout
-        android:id="@+id/profiledetail_area"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        app:layout_constraintTop_toTopOf="parent"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/userImageView"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:src="@drawable/default_photo" />
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/userImageView"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_margin="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/default_photo"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="18dp"
-            android:layout_marginBottom="24dp"
-            android:textAlignment="center"
-            android:text="@string/username"
-            android:textSize="24sp"
-            android:fontFamily="@font/opensans_semibold" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/userNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/opensans_semibold"
+        android:text="@string/username"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userImageView"
+        app:layout_constraintHorizontal_bias="0.5"
+        />
 
     <Button
         android:id="@+id/changeProfilePhotoButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginTop="48dp"
         android:backgroundTint="@color/diamond"
         android:text="@string/ubahGambarProfil"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/deleteProfilePhotoButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profiledetail_area"
-        app:layout_constraintVertical_bias="0.9" />
+        app:layout_constraintTop_toBottomOf="@+id/userNameTextView"
+        app:layout_constraintHorizontal_bias="0.5" />
 
     <Button
         android:id="@+id/deleteProfilePhotoButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="480dp"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginTop="16dp"
         android:backgroundTint="@color/lavender_rose"
         android:text="@string/hapusGambarProfil"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/changeProfilePhotoButton"
+        app:layout_constraintHorizontal_bias="0.5" />
 </androidx.constraintlayout.widget.ConstraintLayout>
+

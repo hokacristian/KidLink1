@@ -1,113 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.ProfilFragment">
 
-    <LinearLayout
-        android:id="@+id/profiledetail_area"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        app:layout_constraintTop_toTopOf="parent"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/userImageView"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/default_photo" />
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/userImageView"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_margin="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/default_photo" />
-
-        <TextView
-            android:id="@+id/userNameTextView"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="18dp"
-            android:layout_marginBottom="24dp"
-            android:textAlignment="center"
-            android:text="@string/username"
-            android:textSize="24sp"
-            android:fontFamily="@font/opensans_semibold" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/userNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/opensans_semibold"
+        android:text="@string/username"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userImageView" />
 
     <LinearLayout
         android:id="@+id/profilListMenu"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/profiledetail_area">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userNameTextView"
+        app:layout_constraintVertical_bias="0.1"
+        >
 
         <LinearLayout
             android:id="@+id/profilButtonMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="24dp"
-            android:layout_gravity="center_vertical"
-            android:orientation="vertical">
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:padding="24dp">
 
             <TextView
                 android:id="@+id/profilTextMenu"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textSize="24sp"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/opensans_semibold"
-                android:text="@string/tvProfilMenuTitleRow1" />
+                android:text="@string/tvProfilMenuTitleRow1"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/profilTextSubMenu"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textSize="14sp"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/opensans_semibold"
+                android:text="@string/tvProfilMenuSubtitleRow1"
                 android:textColor="@color/gray"
-                android:text="@string/tvProfilMenuSubtitleRow1" />
+                android:textSize="12sp" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/bahasaButtonMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="24dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
             android:orientation="vertical"
-            android:layout_gravity="center_vertical"
-            app:layout_constraintTop_toBottomOf="@id/profilButtonMenu">
+            android:padding="24dp">
 
             <TextView
                 android:id="@+id/bahasaTextMenu"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textSize="24sp"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/opensans_semibold"
-                android:text="@string/tvProfilMenuTitleRow2" />
+                android:text="@string/tvProfilMenuTitleRow2"
+                android:textSize="18sp" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/keluarButtonMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="24dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
             android:orientation="vertical"
-            android:layout_gravity="center_vertical"
-            app:layout_constraintTop_toBottomOf="@id/profilButtonMenu">
+            android:padding="24dp">
 
             <TextView
                 android:id="@+id/keluarTextMenu"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textSize="24sp"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/opensans_semibold"
-                android:text="@string/tvProfilMenuTitleRow3" />
+                android:text="@string/tvProfilMenuTitleRow3"
+                android:textSize="18sp" />
         </LinearLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
