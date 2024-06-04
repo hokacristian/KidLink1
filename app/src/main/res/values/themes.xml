@@ -19,5 +19,5 @@
         <item name="android:windowExitTransition">@android:transition/move</item>
     </style>
 
-    <style name="Theme.KidLink" parent="Base.Theme.KidLink" />
+    <style name="Theme.KidLink" parent="Base.Theme.KidLink"/>
 </resources>
