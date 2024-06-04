@@ -43,6 +43,6 @@
     <string name="user_profile_image">Gambar Profil Pengguna</string>
     <string name="last_message">Pesan Terakhir</string>
     <string name="timestamp">09:41</string>
-    <string name="searchbar_hint">Cari pesan disini …</string>
+    <string name="searchbar_hint">Cari pengguna disini …</string>
     <string name="block_user_popup_message">Apakah kamu yakin ingin blokir pengguna ini ?</string>
 </resources>

@@ -71,7 +71,7 @@ class DetailProfilActivity : AppCompatActivity() {
     }
 
     private fun setDefaultProfileImage() {
-        val defaultPhotoUri = "https://firebasestorage.googleapis.com/v0/b/kidlink222.appspot.com/o/profileImages%2FzkVaWQ6z6tVniOIz1ElhmabjeS23%2Fdefault_photo.png?alt=media&token=f740b55e-b0ed-4f05-a56c-b8552d885a53"
+        val defaultPhotoUri = "https://firebasestorage.googleapis.com/v0/b/kidlink.appspot.com/o/profileImages%2FRbgGcBfubLQQoYjTB8iFglVad8K2%2Fdefault_photo.png?alt=media&token=4c303271-2994-4bc7-98dd-5be8236b7cca"
         Glide.with(this).load(defaultPhotoUri).into(profileImageView)
         updateProfileImageUrl(defaultPhotoUri)
         Toast.makeText(this, "Foto profil telah dihapus", Toast.LENGTH_SHORT).show()
