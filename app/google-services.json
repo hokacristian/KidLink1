@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "93826594667",
+    "project_id": "kidlink",
+    "storage_bucket": "kidlink.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:93826594667:android:b6186bda75fa910b43fe2e",
+        "android_client_info": {
+          "package_name": "capstone.kidlink"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBslwN_awXV91YSSaj5xKxbdwbafHRiJsQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
