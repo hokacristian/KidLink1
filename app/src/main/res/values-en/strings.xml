@@ -33,7 +33,7 @@
         <string name="ubahGambarProfil">"Change Image Profile "</string>
         <string name="hapusGambarProfil">Delete Image Profile</string>
     <string name="pwa_content_description">Popup Warning Alert</string>
-        <string name="popup_warning_alert">Message failed to deliver!, Use good and correct language</string>
+        <string name="popup_warning_alert">Message failed to deliver! Use good and correct language</string>
     <string name="logout_question_message">Are you sure want to logout ?</string>
     <string name="yes">Yes</string>
         <string name="no">No</string>
