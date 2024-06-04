@@ -27,7 +27,9 @@
             android:textSize="16sp"
             android:text="@string/username"
             android:fontFamily="@font/opensans_semibold"
-             />
+            android:ellipsize="end"
+            android:maxLines="1"
+            />
 
         <TextView
             android:id="@+id/lastMessageTextView"
@@ -35,7 +37,10 @@
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:text="@string/last_message"
-            android:textColor="@android:color/darker_gray" />
+            android:textColor="@android:color/darker_gray"
+            android:ellipsize="end"
+            android:maxLines="1"
+            />
     </LinearLayout>
 
     <TextView
@@ -44,5 +49,6 @@
         android:layout_height="wrap_content"
         android:text="@string/timestamp"
         android:textSize="12sp"
-        android:textColor="@android:color/darker_gray" />
+        android:textColor="@android:color/darker_gray"
+        android:maxLines="1" />
 </LinearLayout>

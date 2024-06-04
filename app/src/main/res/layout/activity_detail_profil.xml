@@ -31,6 +31,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userImageView"
         app:layout_constraintHorizontal_bias="0.5"
+        android:ellipsize="end"
+        android:maxLines="1"
         />
 
     <Button
