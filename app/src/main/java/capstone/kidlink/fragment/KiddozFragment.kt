@@ -1,5 +1,6 @@
 package capstone.kidlink.fragment
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -20,21 +21,24 @@ class KiddozFragment : Fragment(), UserAdapter.UserClickListener {
     private val binding get() = _binding!!
     private lateinit var db: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
-    private lateinit var userAdapter: UserAdapter // Changed
+    private lateinit var userAdapter: UserAdapter
     private val userList = mutableListOf<User>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = FragmentKiddozBinding.inflate(inflater, container, false)
         return binding.root
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         db = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
 
-        // Correct placement for adapter initialization
         userAdapter = UserAdapter(userList, this)
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
@@ -45,7 +49,9 @@ class KiddozFragment : Fragment(), UserAdapter.UserClickListener {
     }
 
     private fun fetchUsers() {
-        if (auth.currentUser != null) {
+        // Ensure user is authenticated before querying Firestore
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
             db.collection("users").get()
                 .addOnSuccessListener { result ->
                     userList.clear()
@@ -54,10 +60,13 @@ class KiddozFragment : Fragment(), UserAdapter.UserClickListener {
                         userList.add(user)
                     }
                     userAdapter.notifyDataSetChanged()
+                    Log.d("KiddozFragment", "Users loaded: ${userList.size}")
                 }
                 .addOnFailureListener { e ->
                     Log.e("KiddozFragment", "Error loading users", e)
                 }
+        } else {
+            Log.e("KiddozFragment", "User not authenticated")
         }
     }
 
@@ -70,15 +79,52 @@ class KiddozFragment : Fragment(), UserAdapter.UserClickListener {
     }
 
     private fun navigateToChat(user: User) {
-        val currentUserEmail = auth.currentUser?.email ?: return
-        val chatRoomId = if (currentUserEmail < user.email) "$currentUserEmail-${user.email}" else "${user.email}-$currentUserEmail"
+        val currentUser = auth.currentUser ?: return
+        val currentUserEmail = currentUser.email ?: return
+        val currentUserId = currentUser.uid
 
-        Intent(context, ChatActivity::class.java).apply {
+        val chatRoomId = if (currentUserEmail < user.email) {
+            "$currentUserEmail-${user.email}"
+        } else {
+            "${user.email}-$currentUserEmail"
+        }
+
+        val chatRoomRef = db.collection("chatRooms").document(chatRoomId)
+        chatRoomRef.get().addOnSuccessListener { document ->
+            if (!document.exists()) {
+                // Create the chat room document with the required fields
+                val chatRoomData = mapOf(
+                    "chatRoomId" to chatRoomId,
+                    "lastMessage" to "",
+                    "lastMessageTimestamp" to System.currentTimeMillis(),
+                    "participants" to listOf(currentUserEmail, user.email),
+                    "userId" to currentUserId,
+                    "userName" to user.name,
+                    "profileImageUrl" to user.profileImageUrl,
+                    "timestamp" to System.currentTimeMillis()
+                )
+                chatRoomRef.set(chatRoomData)
+                    .addOnSuccessListener {
+                        Log.d("Firestore", "Chat room created successfully")
+                        navigateToChatActivity(chatRoomId, user)
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e("Firestore", "Error creating chat room", e)
+                    }
+            } else {
+                navigateToChatActivity(chatRoomId, user)
+            }
+        }
+    }
+
+    private fun navigateToChatActivity(chatRoomId: String, user: User) {
+        val intent = Intent(requireActivity(), ChatActivity::class.java).apply {
             putExtra("chatRoomId", chatRoomId)
             putExtra("contactName", user.name)
             putExtra("contactPhotoUrl", user.profileImageUrl)
             putExtra("contactEmail", user.email)
-        }.also { startActivity(it) }
+        }
+        startActivity(intent)
     }
 
     override fun onDestroyView() {
