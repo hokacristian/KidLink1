@@ -9,9 +9,9 @@
               <option name="connection">
                 <ConnectionSetting>
                   <option name="appId" value="capstone.kidlink" />
-                  <option name="mobileSdkAppId" value="1:226548745535:android:2ae22bd1dad601a6da7f8a" />
-                  <option name="projectId" value="kidlink222" />
-                  <option name="projectNumber" value="226548745535" />
+                  <option name="mobileSdkAppId" value="1:93826594667:android:b6186bda75fa910b43fe2e" />
+                  <option name="projectId" value="kidlink" />
+                  <option name="projectNumber" value="93826594667" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
