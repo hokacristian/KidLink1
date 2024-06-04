@@ -7,11 +7,28 @@ import capstone.kidlink.data.User
 import capstone.kidlink.databinding.ItemUserBinding
 import com.bumptech.glide.Glide
 
-class UserAdapter(private val users: List<User>) : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
+class UserAdapter(private val users: MutableList<User>, private val listener: UserClickListener) : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
-    private var onItemClickListener: ((User) -> Unit)? = null
+    interface UserClickListener {
+        fun onUserClicked(user: User)
+        fun onImageClicked(user: User)
+    }
 
-    class UserViewHolder(val binding: ItemUserBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class UserViewHolder(val binding: ItemUserBinding) : RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.userImageView.setOnClickListener {
+                listener.onImageClicked(users[adapterPosition])
+            }
+            binding.userNameTextView.setOnClickListener {
+                listener.onUserClicked(users[adapterPosition])
+            }
+        }
+
+        fun bind(user: User) {
+            binding.userNameTextView.text = user.name
+            Glide.with(binding.root.context).load(user.profileImageUrl).into(binding.userImageView)
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val binding = ItemUserBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -19,17 +36,8 @@ class UserAdapter(private val users: List<User>) : RecyclerView.Adapter<UserAdap
     }
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
-        val user = users[position]
-        holder.binding.userNameTextView.text = user.name
-        Glide.with(holder.itemView.context).load(user.profileImageUrl).into(holder.binding.userImageView)
-        holder.itemView.setOnClickListener {
-            onItemClickListener?.invoke(user)
-        }
+        holder.bind(users[position])
     }
 
     override fun getItemCount(): Int = users.size
-
-    fun setOnItemClickListener(listener: (User) -> Unit) {
-        onItemClickListener = listener
-    }
 }

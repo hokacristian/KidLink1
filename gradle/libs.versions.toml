@@ -18,6 +18,7 @@ media3Exoplayer = "1.1.0"
 media3Session = "1.1.0"
 media3Ui = "1.1.0"
 navigationFragment = "2.7.7"
+firebaseAuth = "23.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -37,6 +38,7 @@ androidx-media3-exoplayer = { module = "androidx.media3:media3-exoplayer", versi
 media3-session = { module = "androidx.media3:media3-session", version.ref = "media3Session" }
 media3-ui = { module = "androidx.media3:media3-ui", version.ref = "media3Ui" }
 androidx-navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigationFragment" }
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
