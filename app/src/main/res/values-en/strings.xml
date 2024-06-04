@@ -42,4 +42,6 @@
         <string name="Send_Button">Tombol Kirim</string>
     <string name="user_profile_image">User Profile Image</string>
     <string name="last_message">Last message</string>
+    <string name="timestamp">09:41</string>
+    <string name="searchbar_hint">Search message here …</string>
 </resources>
