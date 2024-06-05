@@ -104,7 +104,7 @@ class SignupActivity : AppCompatActivity() {
     private fun playAnimation() {
         val animations = listOf(
             binding.titleTextView, binding.nameTextView, binding.nameEditTextLayout,
-            binding.passwordTextView, binding.passwordEditTextLayout,
+            binding.passwordTextView, binding.passwordEditTextLayout, binding.confirmPasswordTextView, binding.confirmPasswordEditTextLayout,
             binding.emailTextView, binding.emailEditTextLayout, binding.emailortuTextView, binding.emailortuEditTextLayout,
             binding.signupButton
         ).map {

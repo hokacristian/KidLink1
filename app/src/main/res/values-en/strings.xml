@@ -14,6 +14,7 @@
         <string name="textemail">Enter Your Email</string>
         <string name="textsandi">Enter Your KidLink Password</string>
         <string name="registsandi">Create Your KidLink Password</string>
+        <string name="confirmsandi">Confirm Your Password</string>
         <string name="error_title">Registration Failed!</string>
         <string name="success_title">Registration Successful!</string>
         <string name="login_title">Log in to Your Account!</string>
