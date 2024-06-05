@@ -1,8 +1,6 @@
 package capstone.kidlink.customview
 
 import android.content.Context
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatEditText
 import capstone.kidlink.R
