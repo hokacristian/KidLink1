@@ -9,7 +9,7 @@ import com.google.firebase.auth.FirebaseAuth
 class UserProfileViewModel : ViewModel() {
 
     private val userRepository = UserRepository()
-    private val userId = FirebaseAuth.getInstance().currentUser?.uid.orEmpty() // Handle null appropriately
+    public val userId = FirebaseAuth.getInstance().currentUser?.uid.orEmpty() // Handle null appropriately
     val userProfile = MutableLiveData<User?>()
 
     init {
