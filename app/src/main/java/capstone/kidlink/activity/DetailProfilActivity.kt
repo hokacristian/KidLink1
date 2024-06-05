@@ -2,11 +2,9 @@ package capstone.kidlink.activity
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import capstone.kidlink.R
 import com.bumptech.glide.Glide
 import de.hdodenhof.circleimageview.CircleImageView
@@ -14,7 +12,7 @@ import android.provider.MediaStore
 import android.util.Log
 import android.widget.Button
 import android.widget.Toast
-import androidx.appcompat.app.ActionBar
+import androidx.appcompat.widget.Toolbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -34,10 +32,9 @@ class DetailProfilActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_profil)
 
-        supportActionBar?.apply {
-            displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
-            setCustomView(R.layout.custom_actionbar)
-        }
+        val customToolbar = findViewById<Toolbar>(R.id.customToolbar)
+        setSupportActionBar(customToolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         db = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()

@@ -2,8 +2,8 @@ package capstone.kidlink.activity
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import capstone.kidlink.R
 import capstone.kidlink.fragment.BerandaFragment
@@ -12,6 +12,7 @@ import capstone.kidlink.fragment.PesanFragment
 import capstone.kidlink.fragment.ProfilFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
@@ -25,11 +26,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //Menampilkan Custom Action Bar
-        supportActionBar?.apply {
-            displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
-            setCustomView(R.layout.custom_actionbar)
-        }
+        val customToolbar = findViewById<Toolbar>(R.id.customToolbar)
+        setSupportActionBar(customToolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         auth = FirebaseAuth.getInstance()
 
