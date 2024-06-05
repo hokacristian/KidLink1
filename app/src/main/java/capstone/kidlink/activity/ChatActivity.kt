@@ -100,7 +100,7 @@ class ChatActivity : AppCompatActivity() {
                     updateLastMessageDetails(chatRoomId, messageText, currentUserEmail, contactEmail, contactName, contactPhotoUrl)
                 }
             }
-        }, 1500)
+        }, 1600)
     }
 
 

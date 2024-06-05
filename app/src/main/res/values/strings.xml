@@ -46,4 +46,6 @@
     <string name="timestamp">09:41</string>
     <string name="searchbar_hint">Cari pengguna disini …</string>
     <string name="block_user_popup_message">Apakah kamu yakin ingin blokir pengguna ini ?</string>
+    <string name="password_confirm_error">Password kamu belum sama!</string>
+
 </resources>

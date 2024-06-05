@@ -159,7 +159,7 @@
                 app:startIconDrawable="@drawable/ic_baseline_lock_24"
                 tools:alpha="100">
 
-                <capstone.kidlink.customview.EditTextPassword
+                <capstone.kidlink.customview.EditTextConfirmPassword
                     android:id="@+id/confirmPasswordEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
