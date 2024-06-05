@@ -2,8 +2,8 @@ package capstone.kidlink.activity
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import capstone.kidlink.R
 import capstone.kidlink.fragment.BerandaFragment
@@ -13,7 +13,6 @@ import capstone.kidlink.fragment.ProfilFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 
-@Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private var activeFragment: Fragment? = null
@@ -26,11 +25,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //Menampilkan Custom Action Bar
-        supportActionBar?.apply {
-            displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
-            setCustomView(R.layout.custom_actionbar)
-        }
+        val customToolbar = findViewById<Toolbar>(R.id.customToolbar)
+        setSupportActionBar(customToolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         auth = FirebaseAuth.getInstance()
 
@@ -68,7 +65,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE_CHAT_ACTIVITY && resultCode == RESULT_OK) {
