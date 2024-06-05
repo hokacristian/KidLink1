@@ -7,14 +7,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import capstone.kidlink.R
 import capstone.kidlink.activity.DetailProfilActivity
 import capstone.kidlink.databinding.FragmentProfilBinding
+import capstone.kidlink.viewmodel.UserProfileViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class ProfilFragment : Fragment() {
+
+    private val viewModel by activityViewModels<UserProfileViewModel>()
 
     private var _binding: FragmentProfilBinding? = null
     private val binding get() = _binding!!
@@ -53,6 +58,17 @@ class ProfilFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun observeUserProfile() {
+        viewModel.userProfile.observe(viewLifecycleOwner, Observer { userProfile ->
+            if (userProfile != null) {
+                Glide.with(this).load(userProfile.profileImageUrl).into(binding.userImageView)
+            }
+            if (userProfile != null) {
+                binding.userNameTextView.text = userProfile.name
+            }
+        })
     }
 
     private fun setupAction() {

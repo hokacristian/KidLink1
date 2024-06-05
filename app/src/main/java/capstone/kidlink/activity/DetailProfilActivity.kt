@@ -11,8 +11,12 @@ import de.hdodenhof.circleimageview.CircleImageView
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.Observer
+import capstone.kidlink.viewmodel.UserProfileViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -21,6 +25,7 @@ import java.io.IOException
 @Suppress("DEPRECATION")
 class DetailProfilActivity : AppCompatActivity() {
 
+    private val viewModel by viewModels<UserProfileViewModel>()
     private lateinit var profileImageView: CircleImageView
     private lateinit var changeProfilePhotoButton: Button
     private lateinit var deleteProfilePhotoButton: Button
@@ -32,6 +37,7 @@ class DetailProfilActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_profil)
+        observeUserProfile()
 
         val customToolbar = findViewById<Toolbar>(R.id.customToolbar)
         setSupportActionBar(customToolbar)
@@ -56,17 +62,36 @@ class DetailProfilActivity : AppCompatActivity() {
         }
     }
 
+    private fun observeUserProfile() {
+        viewModel.userProfile.observe(this, Observer { userProfile ->
+            if (userProfile != null) {
+                Glide.with(this).load(userProfile.profileImageUrl)
+                    .into(findViewById(R.id.userImageView))
+            }
+            if (userProfile != null) {
+                findViewById<TextView>(R.id.userNameTextView).text = userProfile.name
+            }
+        })
+    }
+
     private fun loadProfileImage() {
         val currentUserId = auth.currentUser?.uid ?: return
         db.collection("users").document(currentUserId).get().addOnSuccessListener { document ->
-            if (document != null && document.contains("profileImageUrl")) {
+            if (document != null) {
                 val profileImageUrl = document.getString("profileImageUrl")
+                val username = document.getString("name")
+
                 if (!profileImageUrl.isNullOrEmpty()) {
                     Glide.with(this).load(profileImageUrl).into(profileImageView)
+                }
+
+                if (!username.isNullOrEmpty()) {
+                    findViewById<TextView>(R.id.userNameTextView).text = username
                 }
             }
         }
     }
+
 
     private fun setDefaultProfileImage() {
         val defaultPhotoUri = "https://firebasestorage.googleapis.com/v0/b/kidlink.appspot.com/o/profileImages%2FRbgGcBfubLQQoYjTB8iFglVad8K2%2Fdefault_photo.png?alt=media&token=4c303271-2994-4bc7-98dd-5be8236b7cca"
