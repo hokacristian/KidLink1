@@ -1,7 +1,10 @@
 package capstone.kidlink.activity
 
+import android.app.Dialog
 import android.os.Bundle
 import android.util.Log
+import android.os.Handler
+import android.os.Looper
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,6 +15,7 @@ import capstone.kidlink.databinding.ActivityChatBinding
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.Query
 
 class ChatActivity : AppCompatActivity() {
@@ -25,7 +29,6 @@ class ChatActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityChatBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        // Menyembunyikan Action Bar
         supportActionBar?.hide()
 
         db = FirebaseFirestore.getInstance()
@@ -38,7 +41,6 @@ class ChatActivity : AppCompatActivity() {
         val currentUserEmail = auth.currentUser?.email
         val contactEmail = intent.getStringExtra("contactEmail")
 
-        // Set contact name and photo
         binding.userNameTextView.text = contactName
         Glide.with(this).load(contactPhotoUrl).into(binding.userImageView)
 
@@ -50,29 +52,11 @@ class ChatActivity : AppCompatActivity() {
             val messageText = binding.messageEditText.text.toString()
             if (messageText.isNotEmpty()) {
                 val message = Message(senderId = currentUserId, messageText = messageText, censor = "UNSET")
-                db.collection("chatRooms").document(chatRoomId).collection("messages").add(message)
+                val messageRef = db.collection("chatRooms").document(chatRoomId).collection("messages").document()
+                messageRef.set(message)
                     .addOnSuccessListener {
                         binding.messageEditText.text.clear()
-
-                        // Update lastMessageTimestamp and participants
-                        val updateData = mapOf(
-                            "lastMessage" to messageText,
-                            "lastMessageTimestamp" to System.currentTimeMillis(),
-                            "participants" to listOf(currentUserEmail, contactEmail),
-                            "userId" to currentUserId,
-                            "userName" to contactName,
-                            "profileImageUrl" to contactPhotoUrl,
-                            "timestamp" to System.currentTimeMillis()
-                        )
-                        db.collection("chatRooms").document(chatRoomId)
-                            .update(updateData)
-                            .addOnSuccessListener {
-                                Log.d("Firestore", "lastMessageTimestamp and participants updated successfully")
-                            }
-                            .addOnFailureListener { e ->
-                                Log.e("Firestore", "Error updating lastMessageTimestamp and participants", e)
-                            }
-
+                        checkCensorStatusAndDisplay(messageRef, chatRoomId, messageText, currentUserEmail, contactEmail, contactName, contactPhotoUrl)
                     }
                     .addOnFailureListener {
                         Toast.makeText(this, "Failed to send message", Toast.LENGTH_SHORT).show()
@@ -86,12 +70,13 @@ class ChatActivity : AppCompatActivity() {
             .addSnapshotListener { snapshots, _ ->
                 if (snapshots != null) {
                     messageList.clear()
-                    for (document in snapshots) {
-                        val message = document.toObject(Message::class.java)
-                        messageList.add(message)
+                    snapshots.documents.forEach { document ->
+                        messageList.add(document.toObject(Message::class.java)!!)
                     }
                     messageAdapter.notifyDataSetChanged()
-                    binding.chatRecyclerView.scrollToPosition(messageList.size - 1) // Scroll to bottom
+                    if (messageList.isNotEmpty()) {
+                        binding.chatRecyclerView.scrollToPosition(messageList.size - 1)
+                    }
                 }
             }
 
@@ -99,5 +84,48 @@ class ChatActivity : AppCompatActivity() {
             setResult(RESULT_OK)
             finish()
         }
+    }
+
+    private fun checkCensorStatusAndDisplay(messageRef: DocumentReference, chatRoomId: String, messageText: String, currentUserEmail: String?, contactEmail: String?, contactName: String?, contactPhotoUrl: String?) {
+        // Delay untuk memeriksa status censor, misalnya 5000 ms (5 detik)
+        Handler(Looper.getMainLooper()).postDelayed({
+            messageRef.get().addOnSuccessListener { documentSnapshot ->
+                val censor = documentSnapshot.getString("censor")
+                if ("UNSAFE" == censor) {
+                    showWarningPopup()
+                    messageRef.delete() // Opsional: Hapus pesan dari Firestore jika tidak aman
+                } else {
+                    updateLastMessageDetails(chatRoomId, messageText, currentUserEmail, contactEmail, contactName, contactPhotoUrl)
+                }
+            }
+        }, 1500)
+    }
+
+
+    private fun updateLastMessageDetails(chatRoomId: String, messageText: String, currentUserEmail: String?, contactEmail: String?, contactName: String?, contactPhotoUrl: String?) {
+        val updateData = mapOf(
+            "lastMessage" to messageText,
+            "lastMessageTimestamp" to System.currentTimeMillis(),
+            "participants" to listOfNotNull(currentUserEmail, contactEmail),
+            "userId" to auth.currentUser?.uid,
+            "userName" to contactName,
+            "profileImageUrl" to contactPhotoUrl,
+            "timestamp" to System.currentTimeMillis()
+        )
+        db.collection("chatRooms").document(chatRoomId)
+            .update(updateData)
+            .addOnSuccessListener {
+                Log.d("Firestore", "Last message and participants updated successfully.")
+            }
+            .addOnFailureListener { e ->
+                Log.e("Firestore", "Error updating last message and participants", e)
+            }
+    }
+
+    private fun showWarningPopup() {
+        val dialog = Dialog(this)
+        dialog.setContentView(R.layout.item_warning_popup)
+        dialog.setCancelable(true)
+        dialog.show()
     }
 }
