@@ -4,4 +4,4 @@
 
 Dear ML Developers,
 
-Data dapat diliat pada direktori data sedangkan model yang digunakan dapa diliat dalam folder models
+Data dapat diliat pada direktori data sedangkan model yang digunakan dapat diliat dalam folder models
