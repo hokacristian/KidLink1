@@ -2,11 +2,9 @@ package capstone.kidlink.activity
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import capstone.kidlink.R
 import com.bumptech.glide.Glide
 import de.hdodenhof.circleimageview.CircleImageView
@@ -20,6 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import java.io.IOException
 
+@Suppress("DEPRECATION")
 class DetailProfilActivity : AppCompatActivity() {
 
     private lateinit var profileImageView: CircleImageView
@@ -88,6 +87,7 @@ class DetailProfilActivity : AppCompatActivity() {
             }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {

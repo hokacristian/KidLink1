@@ -64,10 +64,6 @@ class RecentChatRecyclerAdapter(
                         }
                     }
                 }
-                .addOnFailureListener { e ->
-                    holder.usernameText.text = "Unknown User"
-                    Glide.with(context).load(R.drawable.default_photo).into(holder.profilePic)
-                }
         }
 
         holder.lastMessageText.text = chat.lastMessage

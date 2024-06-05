@@ -48,6 +48,7 @@ class KiddozFragment : Fragment(), UserAdapter.UserClickListener {
         fetchUsers()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun fetchUsers() {
         // Ensure user is authenticated before querying Firestore
         val currentUser = auth.currentUser
@@ -82,7 +83,6 @@ class KiddozFragment : Fragment(), UserAdapter.UserClickListener {
         val currentUser = auth.currentUser ?: return
         val currentUserEmail = currentUser.email ?: return
         val currentUserId = currentUser.uid
-
         val chatRoomId = if (currentUserEmail < user.email) {
             "$currentUserEmail-${user.email}"
         } else {

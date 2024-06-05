@@ -13,6 +13,7 @@ import capstone.kidlink.fragment.ProfilFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 
+@Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private var activeFragment: Fragment? = null

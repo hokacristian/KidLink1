@@ -7,6 +7,7 @@ import capstone.kidlink.data.User
 import capstone.kidlink.databinding.ItemUserBinding
 import com.bumptech.glide.Glide
 
+@Suppress("DEPRECATION")
 class UserAdapter(private val users: MutableList<User>, private val listener: UserClickListener) : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
     interface UserClickListener {

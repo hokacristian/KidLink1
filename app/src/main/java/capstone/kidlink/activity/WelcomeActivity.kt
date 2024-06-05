@@ -8,9 +8,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
-import capstone.kidlink.R
 
 import capstone.kidlink.databinding.ActivityWelcomeBinding
 
@@ -36,7 +34,6 @@ class WelcomeActivity : AppCompatActivity() {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
             )
         }
-        // Menyembunyikan Action Bar
         supportActionBar?.hide()
     }
 
