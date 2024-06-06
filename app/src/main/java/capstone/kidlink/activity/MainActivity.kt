@@ -5,13 +5,17 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import capstone.kidlink.R
+import capstone.kidlink.data.UserPreference
+import capstone.kidlink.data.dataStore
 import capstone.kidlink.fragment.BerandaFragment
 import capstone.kidlink.fragment.KiddozFragment
 import capstone.kidlink.fragment.PesanFragment
 import capstone.kidlink.fragment.ProfilFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.launch
 
 @Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
@@ -25,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        checkLoginStatus()
 
         val customToolbar = findViewById<Toolbar>(R.id.customToolbar)
         setSupportActionBar(customToolbar)
@@ -82,5 +87,16 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
         finish()
+    }
+
+    private fun checkLoginStatus() {
+        val userPref = UserPreference.getInstance(applicationContext.dataStore)
+        lifecycleScope.launch {
+            userPref.isLoggedIn.collect { isLoggedIn ->
+                if (!isLoggedIn) {
+                    navigateToLoginActivity()
+                }
+            }
+        }
     }
 }

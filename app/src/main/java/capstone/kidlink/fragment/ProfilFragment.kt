@@ -10,11 +10,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
+import capstone.kidlink.activity.WelcomeActivity
+import capstone.kidlink.data.UserPreference
+import capstone.kidlink.data.dataStore
 import com.bumptech.glide.Glide
 import capstone.kidlink.databinding.FragmentProfilBinding
 import capstone.kidlink.viewmodel.UserProfileViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.launch
 
 class ProfilFragment : Fragment() {
 
@@ -59,10 +64,21 @@ class ProfilFragment : Fragment() {
         }
 
         binding.keluarButtonMenu.setOnClickListener {
-            FirebaseAuth.getInstance().signOut() // Log out the current user
-            // Optionally, navigate to the login or splash screen after logging out
+            auth.signOut() // Log out the current user
+            val userPref = UserPreference.getInstance(requireContext().dataStore)
+            lifecycleScope.launch {
+                userPref.saveLoginState(false)
+                navigateToWelcomeActivity()
+            }
         }
+
     }
+
+    private fun navigateToWelcomeActivity() {
+        startActivity(Intent(context, WelcomeActivity::class.java))
+        activity?.finish()
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
