@@ -112,9 +112,12 @@ class ChatActivity : AppCompatActivity() {
     }
 
     private fun showWarningPopup() {
-        val dialog = Dialog(this)
-        dialog.setContentView(R.layout.item_warning_popup)
-        dialog.setCancelable(true)
-        dialog.show()
+        if (!isFinishing) {
+            val dialog = Dialog(this)
+            dialog.setContentView(R.layout.item_warning_popup)
+            dialog.setCancelable(true)
+            dialog.show()
+        }
     }
+
 }

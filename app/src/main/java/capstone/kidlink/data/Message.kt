@@ -15,6 +15,7 @@ data class Message(
 data class Chat(
     val chatRoomId: String = "",
     val lastMessage: String = "",
+    val userName: String = "",
     val lastMessageTimestamp: Long = 0,
     val participants: List<String> = listOf()
 )
