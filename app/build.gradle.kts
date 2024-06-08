@@ -86,6 +86,15 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-firestore:24.0.1")
 
+    //Data Store
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+
+    //View Model
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+    implementation("androidx.activity:activity-ktx:1.8.1")
+
+
     //ROOM
 //    implementation("androidx.room:room-common:2.6.1")
 //    implementation("androidx.room:room-ktx:2.6.1")

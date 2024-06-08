@@ -5,6 +5,8 @@ import android.animation.ObjectAnimator
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.util.Patterns
 import android.view.View
@@ -30,19 +32,38 @@ class SignupActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
-        // Menyembunyikan Action Bar
         supportActionBar?.hide()
+
+        // Assume your EditTextConfirmPassword has a method to set the password to match
+        binding.confirmPasswordEditText.setPasswordToMatch(binding.passwordEditText.text.toString())
+
+        // Add TextChangedListener to update the password to match dynamically
+        binding.passwordEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                binding.confirmPasswordEditText.setPasswordToMatch(s.toString())
+            }
+            override fun afterTextChanged(s: Editable) {}
+        })
 
         binding.signupButton.setOnClickListener {
             val name = binding.nameEditText.text.toString().trim()
             val password = binding.passwordEditText.text.toString().trim()
+            val confirmPassword = binding.confirmPasswordEditText.text.toString().trim()
             val email = binding.emailEditText.text.toString().trim()
             val ortuEmail = binding.emailEditTextortu.text.toString().trim()
 
-            if (name.isNotEmpty() && password.isNotEmpty() && email.isNotEmpty() && ortuEmail.isNotEmpty()) {
-                registerUser(name, email, password, ortuEmail)
+            // Update password to match di sini jika Anda mengubah password setelah yang pertama kali di-set
+            binding.confirmPasswordEditText.setPasswordToMatch(password)
+
+            if (name.isNotEmpty() && password.isNotEmpty() && confirmPassword.isNotEmpty() && email.isNotEmpty() && ortuEmail.isNotEmpty()) {
+                if (binding.confirmPasswordEditText.validatePassword()) {
+                    registerUser(name, email, password, ortuEmail)
+                } else {
+                    Toast.makeText(this, "Passwords do not match.", Toast.LENGTH_SHORT).show()
+                }
             } else {
-                Toast.makeText(this, "Tolong isi terlebih dahulu email dan password", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Please fill all fields.", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -104,7 +125,7 @@ class SignupActivity : AppCompatActivity() {
     private fun playAnimation() {
         val animations = listOf(
             binding.titleTextView, binding.nameTextView, binding.nameEditTextLayout,
-            binding.passwordTextView, binding.passwordEditTextLayout,
+            binding.passwordTextView, binding.passwordEditTextLayout, binding.confirmPasswordTextView, binding.confirmPasswordEditTextLayout,
             binding.emailTextView, binding.emailEditTextLayout, binding.emailortuTextView, binding.emailortuEditTextLayout,
             binding.signupButton
         ).map {

@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import capstone.kidlink.activity.ChatActivity
@@ -29,6 +30,17 @@ class KiddozFragment : Fragment(), UserAdapter.UserClickListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentKiddozBinding.inflate(inflater, container, false)
+        binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let { searchUsers(it) }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let { searchUsers(it) }
+                return true
+            }
+        })
         return binding.root
     }
 
@@ -48,12 +60,14 @@ class KiddozFragment : Fragment(), UserAdapter.UserClickListener {
         fetchUsers()
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    private fun fetchUsers() {
-        // Ensure user is authenticated before querying Firestore
-        val currentUser = auth.currentUser
-        if (currentUser != null) {
-            db.collection("users").get()
+    private fun searchUsers(query: String) {
+        val searchQuery = query.trim()
+        if (searchQuery.isNotEmpty()) {
+            db.collection("users")
+                .orderBy("name")
+                .startAt(searchQuery)
+                .endAt("$searchQuery\uf8ff")
+                .get()
                 .addOnSuccessListener { result ->
                     userList.clear()
                     for (document in result) {
@@ -61,14 +75,30 @@ class KiddozFragment : Fragment(), UserAdapter.UserClickListener {
                         userList.add(user)
                     }
                     userAdapter.notifyDataSetChanged()
-                    Log.d("KiddozFragment", "Users loaded: ${userList.size}")
                 }
                 .addOnFailureListener { e ->
                     Log.e("KiddozFragment", "Error loading users", e)
                 }
         } else {
-            Log.e("KiddozFragment", "User not authenticated")
+            fetchUsers()
         }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun fetchUsers() {
+        db.collection("users").get()
+            .addOnSuccessListener { result ->
+                userList.clear()
+                for (document in result) {
+                    val user = document.toObject(User::class.java)
+                    userList.add(user)
+                }
+                userAdapter.notifyDataSetChanged()
+                Log.d("KiddozFragment", "Users loaded: ${userList.size}")
+            }
+            .addOnFailureListener { e ->
+                Log.e("KiddozFragment", "Error loading users", e)
+            }
     }
 
     override fun onUserClicked(user: User) {
@@ -92,7 +122,6 @@ class KiddozFragment : Fragment(), UserAdapter.UserClickListener {
         val chatRoomRef = db.collection("chatRooms").document(chatRoomId)
         chatRoomRef.get().addOnSuccessListener { document ->
             if (!document.exists()) {
-                // Create the chat room document with the required fields
                 val chatRoomData = mapOf(
                     "chatRoomId" to chatRoomId,
                     "lastMessage" to "",
@@ -128,6 +157,7 @@ class KiddozFragment : Fragment(), UserAdapter.UserClickListener {
     }
 
     override fun onDestroyView() {
+
         super.onDestroyView()
         _binding = null
     }

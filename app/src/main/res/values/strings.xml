@@ -14,6 +14,7 @@
     <string name="textemail">Masukan Email Kamu</string>
     <string name="textsandi">Masukkan Kata Sandi KidLink Kamu</string>
     <string name="registsandi">Buat Kata Sandi KidLink Kamu</string>
+    <string name="confirmsandi">Konfirmasi Kata Sandi Kamu</string>
     <string name="error_title">Anda Gagal Terdaftar !</string>
     <string name="success_title">Anda Berhasil Terdaftar !</string>
     <string name="login_title">Masukkan akun kamu dulu Yuk!</string>
@@ -43,6 +44,8 @@
     <string name="user_profile_image">Gambar Profil Pengguna</string>
     <string name="last_message">Pesan Terakhir</string>
     <string name="timestamp">09:41</string>
-    <string name="searchbar_hint">Cari pesan disini …</string>
+    <string name="searchbar_hint">Cari pengguna disini …</string>
     <string name="block_user_popup_message">Apakah kamu yakin ingin blokir pengguna ini ?</string>
+    <string name="password_confirm_error">Password kamu belum sama!</string>
+
 </resources>
