@@ -63,7 +63,7 @@ class PesanFragment : Fragment() {
                     chatList.clear()
                     for (document in snapshots.documents) {
                         val chat = document.toObject(Chat::class.java)
-                        if (chat != null && chat.userId.isNotEmpty()) {
+                        if (chat != null && chat.lastMessage.isNotEmpty()) {
                             chatList.add(chat)
                         }
                     }

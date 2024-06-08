@@ -10,11 +10,7 @@ data class Message(
 
 data class Chat(
     val chatRoomId: String = "",
-    val userId: String = "",
-    val userName: String = "",
     val lastMessage: String = "",
-    val timestamp: Long = 0,
-    val profileImageUrl: String = "",
     val lastMessageTimestamp: Long = 0,
     val participants: List<String> = listOf()
 )

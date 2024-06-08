@@ -67,7 +67,7 @@ class RecentChatRecyclerAdapter(
         }
 
         holder.lastMessageText.text = chat.lastMessage
-        holder.lastMessageTime.text = FirebaseUtil.timestampToString(chat.timestamp)
+        holder.lastMessageTime.text = FirebaseUtil.timestampToString(chat.lastMessageTimestamp)
     }
 
     override fun getItemCount(): Int = chatList.size
