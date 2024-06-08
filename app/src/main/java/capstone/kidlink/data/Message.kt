@@ -8,7 +8,7 @@ data class Message(
     )
 {
     fun getId(): String {
-        return senderId + timestamp;
+        return senderId + timestamp
     }
 }
 
