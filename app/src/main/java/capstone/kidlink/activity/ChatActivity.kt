@@ -25,6 +25,7 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var messageAdapter: MessageAdapter
     private val messageList = mutableListOf<Message>()
+    private var sendingMessageIds = mutableSetOf<String>()
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,11 +55,11 @@ class ChatActivity : AppCompatActivity() {
             val messageText = binding.messageEditText.text.toString()
             if (messageText.isNotEmpty()) {
                 val message = Message(senderId = currentUserId, messageText = messageText, censor = "UNSET")
+                sendingMessageIds.add(message.getId())
                 val messageRef = db.collection("chatRooms").document(chatRoomId).collection("messages").document()
                 messageRef.set(message)
                     .addOnSuccessListener {
                         binding.messageEditText.text.clear()
-                        checkCensorStatusAndDisplay(messageRef, chatRoomId, messageText, currentUserEmail, contactEmail, contactName, contactPhotoUrl)
                     }
                     .addOnFailureListener {
                         Toast.makeText(this, "Failed to send message", Toast.LENGTH_SHORT).show()
@@ -71,13 +72,19 @@ class ChatActivity : AppCompatActivity() {
             .orderBy("timestamp", Query.Direction.ASCENDING)
             .addSnapshotListener { snapshots, _ ->
                 if (snapshots != null) {
+                    val unfilteredMessageList = snapshots.documents.map { it.toObject(Message::class.java)!! }
+                    val safeOrSendingMessageList = unfilteredMessageList.filter { it.censor == "SAFE" || (it.censor == "UNSET" && it.senderId == currentUserId) }
                     messageList.clear()
-                    snapshots.documents.forEach { document ->
-                        messageList.add(document.toObject(Message::class.java)!!)
-                    }
+                    messageList.addAll(safeOrSendingMessageList)
                     messageAdapter.notifyDataSetChanged()
                     if (messageList.isNotEmpty()) {
                         binding.chatRecyclerView.scrollToPosition(messageList.size - 1)
+                    }
+                    val newSentMessages = unfilteredMessageList.filter { sendingMessageIds.contains(it.getId()) && it.censor != "UNSET"}
+                    sendingMessageIds
+                        .removeAll(newSentMessages.map { it.getId() }.toSet())
+                    if (newSentMessages.any { it.censor == "UNSAFE" }) {
+                        showWarningPopup()
                     }
                 }
             }
@@ -86,42 +93,6 @@ class ChatActivity : AppCompatActivity() {
             setResult(RESULT_OK)
             finish()
         }
-    }
-
-    private fun checkCensorStatusAndDisplay(messageRef: DocumentReference, chatRoomId: String, messageText: String, currentUserEmail: String?, contactEmail: String?, contactName: String?, contactPhotoUrl: String?) {
-        // Delay untuk memeriksa status censor, misalnya 5000 ms (5 detik)
-        Handler(Looper.getMainLooper()).postDelayed({
-            messageRef.get().addOnSuccessListener { documentSnapshot ->
-                val censor = documentSnapshot.getString("censor")
-                if ("UNSAFE" == censor) {
-                    showWarningPopup()
-                    messageRef.delete() // Opsional: Hapus pesan dari Firestore jika tidak aman
-                } else {
-                    updateLastMessageDetails(chatRoomId, messageText, currentUserEmail, contactEmail, contactName, contactPhotoUrl)
-                }
-            }
-        }, 1500)
-    }
-
-
-    private fun updateLastMessageDetails(chatRoomId: String, messageText: String, currentUserEmail: String?, contactEmail: String?, contactName: String?, contactPhotoUrl: String?) {
-        val updateData = mapOf(
-            "lastMessage" to messageText,
-            "lastMessageTimestamp" to System.currentTimeMillis(),
-            "participants" to listOfNotNull(currentUserEmail, contactEmail),
-            "userId" to auth.currentUser?.uid,
-            "userName" to contactName,
-            "profileImageUrl" to contactPhotoUrl,
-            "timestamp" to System.currentTimeMillis()
-        )
-        db.collection("chatRooms").document(chatRoomId)
-            .update(updateData)
-            .addOnSuccessListener {
-                Log.d("Firestore", "Last message and participants updated successfully.")
-            }
-            .addOnFailureListener { e ->
-                Log.e("Firestore", "Error updating last message and participants", e)
-            }
     }
 
     private fun showWarningPopup() {

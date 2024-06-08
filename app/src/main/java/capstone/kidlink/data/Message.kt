@@ -5,8 +5,12 @@ data class Message(
     val messageText: String? = null,
     val timestamp: Long = System.currentTimeMillis(),
     val censor : String? = "UNSET"
-
     )
+{
+    fun getId(): String {
+        return senderId + timestamp;
+    }
+}
 
 data class Chat(
     val chatRoomId: String = "",
