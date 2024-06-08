@@ -10,8 +10,12 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import capstone.kidlink.data.UserPreference
+import capstone.kidlink.data.dataStore
 import capstone.kidlink.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -41,12 +45,18 @@ class LoginActivity : AppCompatActivity() {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
+                    // Save the login state
+                    val userPref = UserPreference.getInstance(applicationContext.dataStore)
+                    lifecycleScope.launch {
+                        userPref.saveLoginState(true)
+                    }
                     navigateToBerandaActivity()
                     Toast.makeText(this, "Login successful", Toast.LENGTH_LONG).show()
                 } else {
                     Toast.makeText(this, "Login failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()
                 }
             }
+
     }
 
     private fun setupView() {

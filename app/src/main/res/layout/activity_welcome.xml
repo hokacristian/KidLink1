@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/imageViewHeader"
         android:layout_marginHorizontal="32dp"
-        android:layout_marginVertical="64dp"
+
         android:fontFamily="@font/raleway_bold"
         android:textAlignment="center"
         android:text="@string/welcome_text"
@@ -33,7 +33,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guidelineHorizontal"/>
+        app:layout_constraintTop_toTopOf="@+id/guidelineHorizontal"
+        app:layout_constraintBottom_toTopOf="@id/textViewDescription"
+        />
 
     <TextView
         android:id="@+id/textViewDescription"
@@ -42,7 +44,6 @@
         android:layout_below="@id/titleTextView"
         android:textAlignment="center"
         android:layout_marginHorizontal="32dp"
-        android:layout_marginVertical="30dp"
         android:fontFamily="@font/opensans_regular"
         android:gravity="center"
         android:text="@string/description_text"
@@ -52,6 +53,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleTextView"
+        app:layout_constraintBottom_toTopOf="@id/hastag"
         />
 
     <TextView
@@ -60,7 +62,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/textViewDescription"
         android:layout_centerHorizontal="true"
-        android:layout_marginVertical="32dp"
         android:fontFamily="@font/opensans_semibolditalic"
         android:textAlignment="center"
         android:text="@string/hastag"
@@ -70,6 +71,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewDescription"
+        app:layout_constraintBottom_toTopOf="@id/loginButton"
         />
 
     <Button
@@ -77,17 +79,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/hastag"
+        android:padding="16dp"
         android:layout_marginHorizontal="32dp"
-        android:layout_marginVertical="48dp"
         android:backgroundTint="@color/diamond"
         android:fontFamily="@font/opensans_semibold"
         android:text="@string/login"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/guidelineVertical"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/hastag"
+        app:layout_constraintBottom_toTopOf="@id/signupButton"
         />
 
     <Button
@@ -95,17 +97,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/loginButton"
+        android:padding="16dp"
         android:layout_marginHorizontal="32dp"
-        android:layout_marginVertical="16dp"
         android:backgroundTint="@color/lavender_rose"
         android:fontFamily="@font/opensans_semibold"
         android:text="@string/register"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guidelineVertical"
         app:layout_constraintTop_toBottomOf="@+id/loginButton"
+        app:layout_constraintBottom_toBottomOf="parent"
         />
 
     <androidx.constraintlayout.widget.Guideline
@@ -131,6 +133,7 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintGuide_percent="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

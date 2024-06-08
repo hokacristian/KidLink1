@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,15 +21,28 @@ class PesanFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: RecentChatRecyclerAdapter
-    private lateinit var chatList: MutableList<Chat>
+    private var chatList = mutableListOf<Chat>() // Initialize the list here
     private lateinit var db: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_pesan, container, false)
+    ): View {
+        val view = inflater.inflate(R.layout.fragment_pesan, container, false)
+        val searchBar = view.findViewById<SearchView>(R.id.searchBar)
+        searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let { searchChats(it) }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let { searchChats(it) }
+                return true
+            }
+        })
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -36,15 +50,35 @@ class PesanFragment : Fragment() {
 
         recyclerView = view.findViewById(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(context)
-
         db = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
 
-        chatList = mutableListOf()
+        // Adapter setup should be here after chatList has been initialized
         adapter = RecentChatRecyclerAdapter(chatList, requireContext(), auth)
         recyclerView.adapter = adapter
 
         loadChats()
+    }
+
+    private fun searchChats(query: String) {
+        val currentUserEmail = auth.currentUser?.email ?: return
+        db.collection("chatRooms")
+            .whereArrayContains("participants", currentUserEmail)
+            .orderBy("lastMessageTimestamp", Query.Direction.DESCENDING)
+            .get()
+            .addOnSuccessListener { snapshots ->
+                chatList.clear()
+                for (document in snapshots) {
+                    val chat = document.toObject(Chat::class.java)
+                    if (chat != null && chat.userId.isNotEmpty() && (chat.userName.contains(query) || chat.lastMessage.contains(query))) {
+                        chatList.add(chat)
+                    }
+                }
+                adapter.notifyDataSetChanged()
+            }
+            .addOnFailureListener { e ->
+                Log.e("PesanFragment", "Error loading chats", e)
+            }
     }
 
     @SuppressLint("NotifyDataSetChanged")
