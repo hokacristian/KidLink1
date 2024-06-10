@@ -47,6 +47,7 @@ class SignupActivity : AppCompatActivity() {
         })
 
         binding.signupButton.setOnClickListener {
+            showLoading(true)
             val name = binding.nameEditText.text.toString().trim()
             val password = binding.passwordEditText.text.toString().trim()
             val confirmPassword = binding.confirmPasswordEditText.text.toString().trim()
@@ -60,9 +61,11 @@ class SignupActivity : AppCompatActivity() {
                 if (binding.confirmPasswordEditText.validatePassword()) {
                     registerUser(name, email, password, ortuEmail)
                 } else {
+                    showLoading(false)
                     Toast.makeText(this, "Passwords do not match.", Toast.LENGTH_SHORT).show()
                 }
             } else {
+                showLoading(false)
                 Toast.makeText(this, "Please fill all fields.", Toast.LENGTH_SHORT).show()
             }
         }
@@ -87,17 +90,21 @@ class SignupActivity : AppCompatActivity() {
                             storageReference.downloadUrl.addOnSuccessListener { uri ->
                                 val profileImageUrl = uri.toString()
                                 saveUserToFirestore(userId, name, email, ortuEmail, profileImageUrl)
+                                showLoading(false)
                                 navigateToWelcomeActivityActivity()
                                 Toast.makeText(this, "Registration successful", Toast.LENGTH_LONG).show()
                             }.addOnFailureListener { e ->
+                                showLoading(false)
                                 Log.e("FirebaseStorage", "Error getting download URL", e)
                                 Toast.makeText(this, "Registration failed: ${e.message}", Toast.LENGTH_LONG).show()
                             }
                         }.addOnFailureListener { e ->
+                            showLoading(false)
                             Log.e("FirebaseStorage", "Error uploading default photo", e)
                             Toast.makeText(this, "Registration failed: ${e.message}", Toast.LENGTH_LONG).show()
                         }
                 } else {
+                    showLoading(false)
                     Toast.makeText(this, "Registration failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()
                 }
             }
@@ -113,10 +120,12 @@ class SignupActivity : AppCompatActivity() {
         )
         db.collection("users").document(userId).set(userMap)
             .addOnSuccessListener {
+                showLoading(false)
                 Toast.makeText(this, "User registered successfully", Toast.LENGTH_LONG).show()
                 Log.d("Firestore", "User data saved successfully")
             }
             .addOnFailureListener { e ->
+                showLoading(false)
                 Toast.makeText(this, "Failed to save user data: ${e.message}", Toast.LENGTH_LONG).show()
                 Log.e("Firestore", "Error saving user data", e)
             }
@@ -142,16 +151,8 @@ class SignupActivity : AppCompatActivity() {
         return name.isNotBlank() && Patterns.EMAIL_ADDRESS.matcher(email).matches() && password.length >= MIN_PASSWORD_LENGTH
     }
 
-    private fun showLoading(isLoading: Boolean) {
-        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
-    }
-
-    private fun showSuccessDialog(message: String) {
-        showDialog(getString(R.string.success_title), message) { finish() }
-    }
-
-    private fun showErrorDialog(errorMessage: String) {
-        showDialog(getString(R.string.error_title), errorMessage) { /* */ }
+    private fun showLoading(state: Boolean) {
+        binding.lottieloading.visibility = if (state) View.VISIBLE else View.GONE
     }
 
     private fun showDialog(title: String, message: String, positiveAction: () -> Unit) {

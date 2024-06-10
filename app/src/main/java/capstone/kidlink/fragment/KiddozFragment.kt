@@ -60,8 +60,10 @@ class KiddozFragment : Fragment(), UserAdapter.UserClickListener {
         fetchUsers()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun searchUsers(query: String) {
-        val searchQuery = query.trim()
+        val searchQuery = query.lowercase() // Convert the query to lowercase
+
         if (searchQuery.isNotEmpty()) {
             db.collection("users")
                 .orderBy("name")
@@ -72,7 +74,9 @@ class KiddozFragment : Fragment(), UserAdapter.UserClickListener {
                     userList.clear()
                     for (document in result) {
                         val user = document.toObject(User::class.java)
-                        userList.add(user)
+                        if (user.name.lowercase().startsWith(searchQuery)) {
+                            userList.add(user)
+                        }
                     }
                     userAdapter.notifyDataSetChanged()
                 }
@@ -83,6 +87,7 @@ class KiddozFragment : Fragment(), UserAdapter.UserClickListener {
             fetchUsers()
         }
     }
+
 
     @SuppressLint("NotifyDataSetChanged")
     private fun fetchUsers() {

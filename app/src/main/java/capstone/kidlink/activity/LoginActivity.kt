@@ -34,6 +34,7 @@ class LoginActivity : AppCompatActivity() {
             val password = binding.passwordEditText.text.toString().trim()
 
             if (email.isNotEmpty() && password.isNotEmpty()) {
+                showLoading(true)  // Show loading animation
                 loginUser(email, password)
             } else {
                 Toast.makeText(this, "Please enter both email and password", Toast.LENGTH_SHORT).show()
@@ -45,7 +46,6 @@ class LoginActivity : AppCompatActivity() {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // Save the login state
                     val userPref = UserPreference.getInstance(applicationContext.dataStore)
                     lifecycleScope.launch {
                         userPref.saveLoginState(true)
@@ -55,8 +55,12 @@ class LoginActivity : AppCompatActivity() {
                 } else {
                     Toast.makeText(this, "Login failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()
                 }
+                showLoading(false)  // Hide loading animation regardless of success or failure
             }
+    }
 
+    private fun showLoading(isLoading: Boolean) {
+        binding.lottieloading.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     private fun setupView() {
@@ -107,10 +111,6 @@ class LoginActivity : AppCompatActivity() {
             )
             startDelay = 100
         }.start()
-    }
-
-    private fun showLoading(isLoading: Boolean) {
-        binding.progressBarLogin.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
 }

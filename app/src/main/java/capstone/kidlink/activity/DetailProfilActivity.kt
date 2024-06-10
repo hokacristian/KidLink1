@@ -20,6 +20,7 @@ import capstone.kidlink.R
 import capstone.kidlink.viewmodel.UserProfileViewModel
 import de.hdodenhof.circleimageview.CircleImageView
 
+@Suppress("DEPRECATION")
 class DetailProfilActivity : AppCompatActivity() {
 
     private val viewModel by viewModels<UserProfileViewModel>()
@@ -54,16 +55,17 @@ class DetailProfilActivity : AppCompatActivity() {
     }
 
     private fun observeUserProfile() {
-        viewModel.userProfile.observe(this, Observer { userProfile ->
+        viewModel.userProfile.observe(this) { userProfile ->
             if (userProfile != null) {
                 Glide.with(this).load(userProfile.profileImageUrl).into(profileImageView)
             }
             if (userProfile != null) {
                 findViewById<TextView>(R.id.userNameTextView).text = userProfile.name
             }
-        })
+        }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == PICK_IMAGE_REQUEST) {

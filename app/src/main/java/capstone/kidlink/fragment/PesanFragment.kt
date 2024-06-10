@@ -60,8 +60,11 @@ class PesanFragment : Fragment() {
         loadChats()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun searchChats(query: String) {
         val currentUserEmail = auth.currentUser?.email ?: return
+        val searchQuery = query.lowercase() // Convert the query to lowercase
+
         db.collection("chatRooms")
             .whereArrayContains("participants", currentUserEmail)
             .orderBy("lastMessageTimestamp", Query.Direction.DESCENDING)
@@ -70,7 +73,7 @@ class PesanFragment : Fragment() {
                 chatList.clear()
                 for (document in snapshots) {
                     val chat = document.toObject(Chat::class.java)
-                    if (chat.lastMessage.isNotEmpty() && (chat.userName.contains(query) || chat.lastMessage.contains(query))) {
+                    if (chat.lastMessage.isNotEmpty() && (chat.userName.lowercase().contains(searchQuery) || chat.lastMessage.lowercase().contains(searchQuery))) {
                         chatList.add(chat)
                     }
                 }
@@ -80,6 +83,7 @@ class PesanFragment : Fragment() {
                 Log.e("PesanFragment", "Error loading chats", e)
             }
     }
+
 
     @SuppressLint("NotifyDataSetChanged")
     private fun loadChats() {

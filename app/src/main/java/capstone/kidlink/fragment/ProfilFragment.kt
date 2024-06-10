@@ -18,7 +18,6 @@ import com.bumptech.glide.Glide
 import capstone.kidlink.databinding.FragmentProfilBinding
 import capstone.kidlink.viewmodel.UserProfileViewModel
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.launch
 
 class ProfilFragment : Fragment() {
@@ -46,12 +45,12 @@ class ProfilFragment : Fragment() {
     }
 
     private fun observeUserProfile() {
-        viewModel.userProfile.observe(viewLifecycleOwner, Observer { userProfile ->
+        viewModel.userProfile.observe(viewLifecycleOwner) { userProfile ->
             userProfile?.let {
                 Glide.with(this).load(it.profileImageUrl).into(binding.userImageView)
                 binding.userNameTextView.text = it.name
             }
-        })
+        }
     }
 
     private fun setupAction() {
