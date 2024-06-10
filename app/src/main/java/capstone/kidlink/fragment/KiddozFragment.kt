@@ -91,24 +91,27 @@ class KiddozFragment : Fragment(), UserAdapter.UserClickListener {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun fetchUsers() {
-        val currentUser = FirebaseAuth.getInstance().currentUser ?: return
-        val currentUserUid = currentUser.uid
-
+        val currentUserUid = FirebaseAuth.getInstance().currentUser?.uid ?: return
         val db = FirebaseFirestore.getInstance()
 
-        // First fetch the list of users who have blocked the current user
+        // First fetch the list of users who have blocked the current user or whom the current user has blocked
         db.collection("blocks")
             .whereEqualTo("blockedId", currentUserUid)
             .get()
-            .addOnSuccessListener { documents ->
-                val blockers = documents.documents.mapNotNull { it.getString("blockerId") }
+            .continueWithTask { task ->
+                val blockerIds = task.result.documents.map { it.getString("blockerId") ?: "" }
+                db.collection("blocks").whereEqualTo("blockerId", currentUserUid).get().continueWith { task2 ->
+                    blockerIds + task2.result.documents.map { it.getString("blockedId") ?: "" }
+                }
+            }.addOnSuccessListener { blockedOrBlockerIds ->
+                val blockedOrBlockerUniqueIds = blockedOrBlockerIds.distinct()
 
-                // Then fetch all users excluding those who have blocked the current user
+                // Then fetch all users excluding those who have blocked the current user or have been blocked by them
                 db.collection("users").get().addOnSuccessListener { result ->
                     userList.clear()
                     for (document in result) {
                         val user = document.toObject(User::class.java)
-                        if (!blockers.contains(user.userId)) { // Check if the user is not in the blockers list
+                        if (!blockedOrBlockerUniqueIds.contains(user.userId)) {
                             userList.add(user)
                         }
                     }
@@ -117,9 +120,10 @@ class KiddozFragment : Fragment(), UserAdapter.UserClickListener {
                     Log.e("KiddozFragment", "Error loading users: ${e.message}", e)
                 }
             }.addOnFailureListener { e ->
-                Log.e("KiddozFragment", "Failed to fetch blockers: ${e.message}", e)
+                Log.e("KiddozFragment", "Failed to fetch block data: ${e.message}", e)
             }
     }
+
 
 
     override fun onUserClicked(user: User) {
