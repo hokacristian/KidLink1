@@ -8,12 +8,9 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.util.Patterns
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import capstone.kidlink.R
 import capstone.kidlink.databinding.ActivitySignupBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -89,7 +86,7 @@ class SignupActivity : AppCompatActivity() {
                         .addOnSuccessListener {
                             storageReference.downloadUrl.addOnSuccessListener { uri ->
                                 val profileImageUrl = uri.toString()
-                                saveUserToFirestore(userId, name, email, ortuEmail, profileImageUrl)
+                                saveUserToFirestore(userId, name.lowercase(), email, ortuEmail, profileImageUrl)
                                 showLoading(false)
                                 navigateToWelcomeActivityActivity()
                                 Toast.makeText(this, "Registration successful", Toast.LENGTH_LONG).show()
@@ -147,25 +144,12 @@ class SignupActivity : AppCompatActivity() {
         }
     }
 
-    private fun isValidInput(name: String, email: String, password: String): Boolean {
-        return name.isNotBlank() && Patterns.EMAIL_ADDRESS.matcher(email).matches() && password.length >= MIN_PASSWORD_LENGTH
-    }
 
     private fun showLoading(state: Boolean) {
         binding.lottieloading.visibility = if (state) View.VISIBLE else View.GONE
     }
 
-    private fun showDialog(title: String, message: String, positiveAction: () -> Unit) {
-        AlertDialog.Builder(this).apply {
-            setTitle(title)
-            setMessage(message)
-            setPositiveButton("OK") { _, _ -> positiveAction.invoke() }
-            show()
-        }
-    }
-
     private companion object {
         const val ANIMATION_DURATION = 500L
-        const val MIN_PASSWORD_LENGTH = 8
     }
 }

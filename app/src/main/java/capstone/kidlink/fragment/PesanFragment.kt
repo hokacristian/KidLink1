@@ -73,7 +73,10 @@ class PesanFragment : Fragment() {
                 chatList.clear()
                 for (document in snapshots) {
                     val chat = document.toObject(Chat::class.java)
-                    if (chat.lastMessage.isNotEmpty() && (chat.userName.lowercase().contains(searchQuery) || chat.lastMessage.lowercase().contains(searchQuery))) {
+                    // Make sure both userName and lastMessage are converted to lowercase before checking
+                    if (chat.lastMessage.isNotEmpty() &&
+                        (chat.userName.lowercase().contains(searchQuery) ||
+                                chat.lastMessage.lowercase().contains(searchQuery))) {
                         chatList.add(chat)
                     }
                 }
@@ -83,6 +86,7 @@ class PesanFragment : Fragment() {
                 Log.e("PesanFragment", "Error loading chats", e)
             }
     }
+
 
 
     @SuppressLint("NotifyDataSetChanged")

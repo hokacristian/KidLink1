@@ -74,6 +74,7 @@ class KiddozFragment : Fragment(), UserAdapter.UserClickListener {
                     userList.clear()
                     for (document in result) {
                         val user = document.toObject(User::class.java)
+                        // Ensure name comparison is case-insensitive
                         if (user.name.lowercase().startsWith(searchQuery)) {
                             userList.add(user)
                         }
@@ -87,6 +88,7 @@ class KiddozFragment : Fragment(), UserAdapter.UserClickListener {
             fetchUsers()
         }
     }
+
 
 
     @SuppressLint("NotifyDataSetChanged")

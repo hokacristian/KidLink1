@@ -64,10 +64,10 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
 
     //CAROUSEL
-    implementation ("androidx.viewpager2:viewpager2:1.1.0")
+    implementation (libs.androidx.viewpager2)
 
     //Glide
-    implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation(libs.glide)
 
     //IMAGE
     implementation ("de.hdodenhof:circleimageview:3.1.0")
