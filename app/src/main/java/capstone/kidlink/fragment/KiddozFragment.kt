@@ -91,20 +91,36 @@ class KiddozFragment : Fragment(), UserAdapter.UserClickListener {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun fetchUsers() {
-        db.collection("users").get()
-            .addOnSuccessListener { result ->
-                userList.clear()
-                for (document in result) {
-                    val user = document.toObject(User::class.java)
-                    userList.add(user)
+        val currentUser = FirebaseAuth.getInstance().currentUser ?: return
+        val currentUserUid = currentUser.uid
+
+        val db = FirebaseFirestore.getInstance()
+
+        // First fetch the list of users who have blocked the current user
+        db.collection("blocks")
+            .whereEqualTo("blockedId", currentUserUid)
+            .get()
+            .addOnSuccessListener { documents ->
+                val blockers = documents.documents.mapNotNull { it.getString("blockerId") }
+
+                // Then fetch all users excluding those who have blocked the current user
+                db.collection("users").get().addOnSuccessListener { result ->
+                    userList.clear()
+                    for (document in result) {
+                        val user = document.toObject(User::class.java)
+                        if (!blockers.contains(user.userId)) { // Check if the user is not in the blockers list
+                            userList.add(user)
+                        }
+                    }
+                    userAdapter.notifyDataSetChanged()
+                }.addOnFailureListener { e ->
+                    Log.e("KiddozFragment", "Error loading users: ${e.message}", e)
                 }
-                userAdapter.notifyDataSetChanged()
-                Log.d("KiddozFragment", "Users loaded: ${userList.size}")
-            }
-            .addOnFailureListener { e ->
-                Log.e("KiddozFragment", "Error loading users", e)
+            }.addOnFailureListener { e ->
+                Log.e("KiddozFragment", "Failed to fetch blockers: ${e.message}", e)
             }
     }
+
 
     override fun onUserClicked(user: User) {
         navigateToChat(user)

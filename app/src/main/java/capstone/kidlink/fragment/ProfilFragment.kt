@@ -62,7 +62,7 @@ class ProfilFragment : Fragment() {
         }
 
         binding.keluarButtonMenu.setOnClickListener {
-            auth.signOut() // Log out the current user
+            auth.signOut()
             val userPref = UserPreference.getInstance(requireContext().dataStore)
             lifecycleScope.launch {
                 userPref.saveLoginState(false)

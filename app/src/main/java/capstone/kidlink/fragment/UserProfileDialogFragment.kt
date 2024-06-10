@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import capstone.kidlink.activity.ChatActivity
 import capstone.kidlink.data.User
@@ -66,9 +67,27 @@ class UserProfileDialogFragment : DialogFragment() {
 
 
         binding.blockButton.setOnClickListener {
-            dismiss()
-            // Implement block logic here
+            val currentUser = FirebaseAuth.getInstance().currentUser
+            currentUser?.let { user ->
+                val blockedUserId = arguments?.getParcelable<User>("user")?.userId
+                val db = FirebaseFirestore.getInstance()
+                blockedUserId?.let { id ->
+                    val blockData = mapOf(
+                        "blockerId" to user.uid,
+                        "blockedId" to id
+                    )
+                    db.collection("blocks").add(blockData).addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            dismiss()
+                            Toast.makeText(context, "User blocked successfully", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(context, "Failed to block user", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            }
         }
+
     }
 
     private fun generateChatRoomId(email: String?): String {
