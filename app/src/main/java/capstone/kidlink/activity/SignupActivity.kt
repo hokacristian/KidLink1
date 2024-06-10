@@ -86,7 +86,7 @@ class SignupActivity : AppCompatActivity() {
                         .addOnSuccessListener {
                             storageReference.downloadUrl.addOnSuccessListener { uri ->
                                 val profileImageUrl = uri.toString()
-                                saveUserToFirestore(userId, name.lowercase(), email, ortuEmail, profileImageUrl)
+                                saveUserToFirestore(userId, name, email, ortuEmail, profileImageUrl)
                                 showLoading(false)
                                 navigateToWelcomeActivityActivity()
                                 Toast.makeText(this, "Registration successful", Toast.LENGTH_LONG).show()

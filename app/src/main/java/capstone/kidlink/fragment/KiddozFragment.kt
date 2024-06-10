@@ -62,20 +62,17 @@ class KiddozFragment : Fragment(), UserAdapter.UserClickListener {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun searchUsers(query: String) {
-        val searchQuery = query.lowercase() // Convert the query to lowercase
+        val searchQuery = query.lowercase() // Convert the query to lowercase for comparison
 
         if (searchQuery.isNotEmpty()) {
             db.collection("users")
-                .orderBy("name")
-                .startAt(searchQuery)
-                .endAt("$searchQuery\uf8ff")
                 .get()
                 .addOnSuccessListener { result ->
                     userList.clear()
                     for (document in result) {
                         val user = document.toObject(User::class.java)
-                        // Ensure name comparison is case-insensitive
-                        if (user.name.lowercase().startsWith(searchQuery)) {
+                        // Check if the user's name contains the query, case-insensitively
+                        if (user.name.lowercase().contains(searchQuery)) {
                             userList.add(user)
                         }
                     }
@@ -88,6 +85,7 @@ class KiddozFragment : Fragment(), UserAdapter.UserClickListener {
             fetchUsers()
         }
     }
+
 
 
 
