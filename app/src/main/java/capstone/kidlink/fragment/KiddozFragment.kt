@@ -63,28 +63,41 @@ class KiddozFragment : Fragment(), UserAdapter.UserClickListener {
     @SuppressLint("NotifyDataSetChanged")
     private fun searchUsers(query: String) {
         val searchQuery = query.lowercase() // Convert the query to lowercase for comparison
+        val currentUserUid = FirebaseAuth.getInstance().currentUser?.uid ?: return
 
-        if (searchQuery.isNotEmpty()) {
-            db.collection("users")
-                .get()
-                .addOnSuccessListener { result ->
-                    userList.clear()
-                    for (document in result) {
-                        val user = document.toObject(User::class.java)
-                        // Check if the user's name contains the query, case-insensitively
-                        if (user.name.lowercase().contains(searchQuery)) {
-                            userList.add(user)
+        db.collection("blocks")
+            .whereEqualTo("blockedId", currentUserUid)
+            .get()
+            .continueWithTask { task ->
+                val blockerIds = task.result.documents.map { it.getString("blockerId") ?: "" }
+                db.collection("blocks").whereEqualTo("blockerId", currentUserUid).get().continueWith { task2 ->
+                    blockerIds + task2.result.documents.map { it.getString("blockedId") ?: "" }
+                }
+            }.addOnSuccessListener { blockedOrBlockerIds ->
+                val blockedOrBlockerUniqueIds = blockedOrBlockerIds.distinct()
+
+                if (searchQuery.isNotEmpty()) {
+                    db.collection("users")
+                        .get()
+                        .addOnSuccessListener { result ->
+                            userList.clear()
+                            for (document in result) {
+                                val user = document.toObject(User::class.java)
+                                if (!blockedOrBlockerUniqueIds.contains(user.userId) && user.name.lowercase().contains(searchQuery)) {
+                                    userList.add(user)
+                                }
+                            }
+                            userAdapter.notifyDataSetChanged()
                         }
-                    }
-                    userAdapter.notifyDataSetChanged()
+                        .addOnFailureListener { e ->
+                            Log.e("KiddozFragment", "Error loading users", e)
+                        }
+                } else {
+                    fetchUsers() // Call fetchUsers if the search query is empty to reload all users
                 }
-                .addOnFailureListener { e ->
-                    Log.e("KiddozFragment", "Error loading users", e)
-                }
-        } else {
-            fetchUsers()
-        }
+            }
     }
+
 
 
 
