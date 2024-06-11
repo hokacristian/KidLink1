@@ -83,7 +83,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="66dp"
                     android:ems="10"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    tools:ignore="SpeakableTextPresentCheck" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Bagian Input Kata Sandi -->
