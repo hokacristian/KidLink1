@@ -17,9 +17,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 
 class SignupActivity : AppCompatActivity() {
-    private lateinit var binding: ActivitySignupBinding
-    private lateinit var auth: FirebaseAuth
-    private lateinit var db: FirebaseFirestore
+    internal lateinit var binding: ActivitySignupBinding
+    internal lateinit var auth: FirebaseAuth
+    internal lateinit var db: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,10 +31,8 @@ class SignupActivity : AppCompatActivity() {
         db = FirebaseFirestore.getInstance()
         supportActionBar?.hide()
 
-        // Assume your EditTextConfirmPassword has a method to set the password to match
         binding.confirmPasswordEditText.setPasswordToMatch(binding.passwordEditText.text.toString())
 
-        // Add TextChangedListener to update the password to match dynamically
         binding.passwordEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
@@ -51,7 +49,6 @@ class SignupActivity : AppCompatActivity() {
             val email = binding.emailEditText.text.toString().trim()
             val ortuEmail = binding.emailEditTextortu.text.toString().trim()
 
-            // Update password to match di sini jika Anda mengubah password setelah yang pertama kali di-set
             binding.confirmPasswordEditText.setPasswordToMatch(password)
 
             if (name.isNotEmpty() && password.isNotEmpty() && confirmPassword.isNotEmpty() && email.isNotEmpty() && ortuEmail.isNotEmpty()) {
@@ -68,12 +65,7 @@ class SignupActivity : AppCompatActivity() {
         }
     }
 
-    private fun navigateToWelcomeActivityActivity() {
-        val intent = Intent(this, WelcomeActivity::class.java)
-        startActivity(intent)
-    }
-
-    private fun registerUser(name: String, email: String, password: String, ortuEmail: String) {
+    internal fun registerUser(name: String, email: String, password: String, ortuEmail: String) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
@@ -107,7 +99,7 @@ class SignupActivity : AppCompatActivity() {
             }
     }
 
-    private fun saveUserToFirestore(userId: String, name: String, email: String, ortuEmail: String, profileImageUrl: String) {
+    internal fun saveUserToFirestore(userId: String, name: String, email: String, ortuEmail: String, profileImageUrl: String) {
         val userMap = hashMapOf(
             "name" to name,
             "email" to email,
@@ -128,6 +120,10 @@ class SignupActivity : AppCompatActivity() {
             }
     }
 
+    internal fun showLoading(state: Boolean) {
+        binding.lottieloading.visibility = if (state) View.VISIBLE else View.GONE
+    }
+
     private fun playAnimation() {
         val animations = listOf(
             binding.titleTextView, binding.nameTextView, binding.nameEditTextLayout,
@@ -144,9 +140,9 @@ class SignupActivity : AppCompatActivity() {
         }
     }
 
-
-    private fun showLoading(state: Boolean) {
-        binding.lottieloading.visibility = if (state) View.VISIBLE else View.GONE
+    private fun navigateToWelcomeActivityActivity() {
+        val intent = Intent(this, WelcomeActivity::class.java)
+        startActivity(intent)
     }
 
     private companion object {

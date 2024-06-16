@@ -18,8 +18,8 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityLoginBinding
-    private lateinit var auth: FirebaseAuth
+    internal lateinit var binding: ActivityLoginBinding
+    internal lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +42,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun loginUser(email: String, password: String) {
+    internal fun loginUser(email: String, password: String) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
@@ -59,7 +59,7 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
-    private fun showLoading(isLoading: Boolean) {
+    internal fun showLoading(isLoading: Boolean) {
         binding.lottieloading.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
@@ -80,7 +80,6 @@ class LoginActivity : AppCompatActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
     }
-
 
     private fun playAnimation() {
         ObjectAnimator.ofFloat(binding.imageView, View.TRANSLATION_X, -30f, 30f).apply {
@@ -112,5 +111,4 @@ class LoginActivity : AppCompatActivity() {
             startDelay = 100
         }.start()
     }
-
 }

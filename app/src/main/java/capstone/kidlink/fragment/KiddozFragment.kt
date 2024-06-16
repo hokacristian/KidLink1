@@ -83,7 +83,8 @@ class KiddozFragment : Fragment(), UserAdapter.UserClickListener {
                             userList.clear()
                             for (document in result) {
                                 val user = document.toObject(User::class.java)
-                                if (!blockedOrBlockerUniqueIds.contains(user.userId) && user.name.lowercase().contains(searchQuery)) {
+                                // Exclude current user and blocked users from the search results
+                                if (!blockedOrBlockerUniqueIds.contains(user.userId) && user.userId != currentUserUid && user.name.lowercase().contains(searchQuery)) {
                                     userList.add(user)
                                 }
                             }
@@ -97,6 +98,7 @@ class KiddozFragment : Fragment(), UserAdapter.UserClickListener {
                 }
             }
     }
+
 
 
 
@@ -124,7 +126,8 @@ class KiddozFragment : Fragment(), UserAdapter.UserClickListener {
                     userList.clear()
                     for (document in result) {
                         val user = document.toObject(User::class.java)
-                        if (!blockedOrBlockerUniqueIds.contains(user.userId)) {
+                        // Add condition to exclude current user's own profile from the list
+                        if (!blockedOrBlockerUniqueIds.contains(user.userId) && user.userId != currentUserUid) {
                             userList.add(user)
                         }
                     }
@@ -136,6 +139,7 @@ class KiddozFragment : Fragment(), UserAdapter.UserClickListener {
                 Log.e("KiddozFragment", "Failed to fetch block data: ${e.message}", e)
             }
     }
+
 
 
 
