@@ -9,15 +9,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import capstone.kidlink.activity.ChatActivity
 import capstone.kidlink.adapter.UserAdapter
 import capstone.kidlink.data.User
 import capstone.kidlink.databinding.FragmentKiddozBinding
+import capstone.kidlink.viewmodel.BlockViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class KiddozFragment : Fragment(), UserAdapter.UserClickListener {
+    private lateinit var viewModel: BlockViewModel
     private var _binding: FragmentKiddozBinding? = null
     private val binding get() = _binding!!
     private lateinit var db: FirebaseFirestore
@@ -47,6 +50,7 @@ class KiddozFragment : Fragment(), UserAdapter.UserClickListener {
     @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(requireActivity()).get(BlockViewModel::class.java)
 
         db = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
@@ -57,13 +61,17 @@ class KiddozFragment : Fragment(), UserAdapter.UserClickListener {
             adapter = userAdapter
         }
 
+        viewModel.blockedUsers.observe(viewLifecycleOwner) { blockedIds ->
+            fetchUsers() // Reactively update the user list when blocked users change
+        }
+
         fetchUsers()
     }
 
     @SuppressLint("NotifyDataSetChanged")
     private fun searchUsers(query: String) {
-        val searchQuery = query.lowercase() // Convert the query to lowercase for comparison
-        val currentUserUid = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        val searchQuery = query.lowercase()
+        val currentUserUid = auth.currentUser?.uid ?: return
 
         db.collection("blocks")
             .whereEqualTo("blockedId", currentUserUid)
@@ -83,7 +91,6 @@ class KiddozFragment : Fragment(), UserAdapter.UserClickListener {
                             userList.clear()
                             for (document in result) {
                                 val user = document.toObject(User::class.java)
-                                // Exclude current user and blocked users from the search results
                                 if (!blockedOrBlockerUniqueIds.contains(user.userId) && user.userId != currentUserUid && user.name.lowercase().contains(searchQuery)) {
                                     userList.add(user)
                                 }
@@ -94,22 +101,15 @@ class KiddozFragment : Fragment(), UserAdapter.UserClickListener {
                             Log.e("KiddozFragment", "Error loading users", e)
                         }
                 } else {
-                    fetchUsers() // Call fetchUsers if the search query is empty to reload all users
+                    fetchUsers() // Reload all users if search query is empty
                 }
             }
     }
 
-
-
-
-
-
     @SuppressLint("NotifyDataSetChanged")
     private fun fetchUsers() {
-        val currentUserUid = FirebaseAuth.getInstance().currentUser?.uid ?: return
-        val db = FirebaseFirestore.getInstance()
+        val currentUserUid = auth.currentUser?.uid ?: return
 
-        // First fetch the list of users who have blocked the current user or whom the current user has blocked
         db.collection("blocks")
             .whereEqualTo("blockedId", currentUserUid)
             .get()
@@ -121,12 +121,10 @@ class KiddozFragment : Fragment(), UserAdapter.UserClickListener {
             }.addOnSuccessListener { blockedOrBlockerIds ->
                 val blockedOrBlockerUniqueIds = blockedOrBlockerIds.distinct()
 
-                // Then fetch all users excluding those who have blocked the current user or have been blocked by them
                 db.collection("users").get().addOnSuccessListener { result ->
                     userList.clear()
                     for (document in result) {
                         val user = document.toObject(User::class.java)
-                        // Add condition to exclude current user's own profile from the list
                         if (!blockedOrBlockerUniqueIds.contains(user.userId) && user.userId != currentUserUid) {
                             userList.add(user)
                         }
@@ -140,9 +138,6 @@ class KiddozFragment : Fragment(), UserAdapter.UserClickListener {
             }
     }
 
-
-
-
     override fun onUserClicked(user: User) {
         navigateToChat(user)
     }
@@ -154,7 +149,6 @@ class KiddozFragment : Fragment(), UserAdapter.UserClickListener {
     private fun navigateToChat(user: User) {
         val currentUser = auth.currentUser ?: return
         val currentUserEmail = currentUser.email ?: return
-        val currentUserId = currentUser.uid
         val chatRoomId = if (currentUserEmail < user.email) {
             "$currentUserEmail-${user.email}"
         } else {
@@ -169,7 +163,7 @@ class KiddozFragment : Fragment(), UserAdapter.UserClickListener {
                     "lastMessage" to "",
                     "lastMessageTimestamp" to System.currentTimeMillis(),
                     "participants" to listOf(currentUserEmail, user.email),
-                    "userId" to currentUserId,
+                    "userId" to currentUser.uid,
                     "userName" to user.name,
                     "profileImageUrl" to user.profileImageUrl,
                     "timestamp" to System.currentTimeMillis()
@@ -199,7 +193,6 @@ class KiddozFragment : Fragment(), UserAdapter.UserClickListener {
     }
 
     override fun onDestroyView() {
-
         super.onDestroyView()
         _binding = null
     }
