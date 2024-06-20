@@ -1,6 +1,6 @@
 # KidLink 👩‍👧‍👦
 
-## What is EcoEase 🤔
+## What is KidLink 🤔
 
 KidLink is a friendly app where children can communicate comfortably. KidLink aims to prevent children from experiencing verbal abuse and provide an educational platform for children to communicate in a friendly manner.
 
