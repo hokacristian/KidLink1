@@ -33,7 +33,6 @@ class MainActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
-        // Redirect to login if not authenticated
         if (auth.currentUser == null) {
             navigateToLoginActivity()
             return
@@ -52,7 +51,6 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-        // Menampilkan BerandaFragment secara default
         if (savedInstanceState == null) {
             bottomNav.selectedItemId = R.id.nav_beranda
         }
@@ -72,7 +70,7 @@ class MainActivity : AppCompatActivity() {
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
-        // Jika di BerandaFragment, keluar dari aplikasi
+
         if (activeFragment is BerandaFragment) {
             super.onBackPressed()
         } else {
@@ -85,7 +83,7 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE_CHAT_ACTIVITY && resultCode == RESULT_OK) {
-            // Menampilkan PesanFragment setelah kembali dari ChatActivity
+
             switchFragment(PesanFragment())
         }
     }

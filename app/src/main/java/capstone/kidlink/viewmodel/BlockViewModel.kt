@@ -9,7 +9,6 @@ class BlockViewModel : ViewModel() {
     val blockedUsers: LiveData<Set<String>> = _blockedUsers
 
     fun updateBlockedUsers(userId: String) {
-        // Update the LiveData with the new blocked user ID
         val currentBlocked = _blockedUsers.value ?: emptySet()
         _blockedUsers.value = currentBlocked + userId
     }

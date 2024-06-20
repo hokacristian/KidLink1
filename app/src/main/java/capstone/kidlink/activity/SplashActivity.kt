@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashBinding
-    private var isNavigated = false  // Flag to track if navigation has occurred
+    private var isNavigated = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +52,7 @@ class SplashActivity : AppCompatActivity() {
             Handler(mainLooper).postDelayed({
                 startActivity(Intent(this, WelcomeActivity::class.java))
                 finish()
-            }, 2000)  // Optional delay to mimic splash screen duration
+            }, 2000)
         }
     }
 }

@@ -76,6 +76,6 @@ class BerandaFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        adapter.releaseAllPlayers() // Lepaskan semua ExoPlayer di adapter
+        adapter.releaseAllPlayers()
     }
 }

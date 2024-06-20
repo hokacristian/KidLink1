@@ -62,7 +62,7 @@ class KiddozFragment : Fragment(), UserAdapter.UserClickListener {
         }
 
         viewModel.blockedUsers.observe(viewLifecycleOwner) { blockedIds ->
-            fetchUsers() // Reactively update the user list when blocked users change
+            fetchUsers()
         }
 
         fetchUsers()
@@ -101,7 +101,7 @@ class KiddozFragment : Fragment(), UserAdapter.UserClickListener {
                             Log.e("KiddozFragment", "Error loading users", e)
                         }
                 } else {
-                    fetchUsers() // Reload all users if search query is empty
+                    fetchUsers()
                 }
             }
     }

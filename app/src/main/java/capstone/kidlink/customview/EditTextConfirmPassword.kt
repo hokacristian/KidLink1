@@ -7,7 +7,7 @@ import capstone.kidlink.R
 
 class EditTextConfirmPassword : AppCompatEditText {
 
-    var matchingPassword: String? = null  // Renamed from passwordToMatch to avoid naming conflict
+    var matchingPassword: String? = null
 
     constructor(context: Context) : super(context) {
         init()
@@ -26,11 +26,11 @@ class EditTextConfirmPassword : AppCompatEditText {
     }
 
     private fun init() {
-        // Initial setup can include any configuration you need
+
     }
 
     fun setPasswordToMatch(password: String) {
-        matchingPassword = password  // Update the password to match
+        matchingPassword = password
     }
 
     fun validatePassword(): Boolean {

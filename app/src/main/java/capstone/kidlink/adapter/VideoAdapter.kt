@@ -24,7 +24,6 @@ class VideoAdapter(
 
     val pageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
-            // Hentikan semua video yang aktif
             activeViewHolders.forEach { it.pauseVideo() }
         }
     }
@@ -47,7 +46,6 @@ class VideoAdapter(
                 exoPlayer.setMediaItem(mediaItem)
                 exoPlayer.prepare()
 
-                // Hapus autoplay saat ViewHolder di-bind
                 exoPlayer.playWhenReady = false
 
                 exoPlayer.addListener(object : Player.Listener {
@@ -67,9 +65,9 @@ class VideoAdapter(
                     if (player?.isPlaying == true) {
                         pauseVideo()
                     } else {
-                        // Hentikan semua video yang aktif sebelum memainkan video yang dipilih
                         activeViewHolders.forEach { if (it != this) it.pauseVideo() }
-                        playVideo()
+                        player?.playWhenReady = true
+                        binding.exoPlayerView.hideController()
                     }
                 }
             }

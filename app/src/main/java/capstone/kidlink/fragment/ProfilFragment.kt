@@ -40,7 +40,7 @@ class ProfilFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.loadUserProfile() // Reload user profile to ensure data is up-to-date
+        viewModel.loadUserProfile()
     }
 
     private fun observeUserProfile() {

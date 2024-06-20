@@ -34,7 +34,7 @@ class LoginActivity : AppCompatActivity() {
             val password = binding.passwordEditText.text.toString().trim()
 
             if (email.isNotEmpty() && password.isNotEmpty()) {
-                showLoading(true)  // Show loading animation
+                showLoading(true)
                 loginUser(email, password)
             } else {
                 Toast.makeText(this, "Please enter both email and password", Toast.LENGTH_SHORT).show()
@@ -55,7 +55,7 @@ class LoginActivity : AppCompatActivity() {
                 } else {
                     Toast.makeText(this, "Login failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()
                 }
-                showLoading(false)  // Hide loading animation regardless of success or failure
+                showLoading(false)
             }
     }
 

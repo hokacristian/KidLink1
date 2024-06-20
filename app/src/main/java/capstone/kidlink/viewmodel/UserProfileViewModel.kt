@@ -9,7 +9,7 @@ import com.google.firebase.auth.FirebaseAuth
 class UserProfileViewModel : ViewModel() {
 
     private val userRepository = UserRepository()
-    public val userId = FirebaseAuth.getInstance().currentUser?.uid.orEmpty() // Handle null appropriately
+    public val userId = FirebaseAuth.getInstance().currentUser?.uid.orEmpty()
     val userProfile = MutableLiveData<User?>()
 
     init {
@@ -28,7 +28,7 @@ class UserProfileViewModel : ViewModel() {
     fun updateUserProfileImage(imageUrl: String) {
         if (userId.isNotEmpty()) {
             userRepository.updateProfileImageUrl(userId, imageUrl).addOnSuccessListener {
-                loadUserProfile()  // Reload data
+                loadUserProfile()
             }
         }
     }

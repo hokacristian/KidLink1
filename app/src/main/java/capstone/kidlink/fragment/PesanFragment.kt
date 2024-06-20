@@ -21,7 +21,7 @@ class PesanFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: RecentChatRecyclerAdapter
-    private var chatList = mutableListOf<Chat>() // Initialize the list here
+    private var chatList = mutableListOf<Chat>()
     private lateinit var db: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
 
@@ -53,7 +53,7 @@ class PesanFragment : Fragment() {
         db = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
 
-        // Adapter setup should be here after chatList has been initialized
+
         adapter = RecentChatRecyclerAdapter(chatList, requireContext(), auth)
         recyclerView.adapter = adapter
 
@@ -63,7 +63,7 @@ class PesanFragment : Fragment() {
     @SuppressLint("NotifyDataSetChanged")
     private fun searchChats(query: String) {
         val currentUserEmail = auth.currentUser?.email ?: return
-        val searchQuery = query.lowercase() // Convert the query to lowercase
+        val searchQuery = query.lowercase()
 
         db.collection("chatRooms")
             .whereArrayContains("participants", currentUserEmail)
@@ -73,7 +73,7 @@ class PesanFragment : Fragment() {
                 chatList.clear()
                 for (document in snapshots) {
                     val chat = document.toObject(Chat::class.java)
-                    // Make sure both userName and lastMessage are converted to lowercase before checking
+
                     if (chat.lastMessage.isNotEmpty() &&
                         (chat.userName.lowercase().contains(searchQuery) ||
                                 chat.lastMessage.lowercase().contains(searchQuery))) {
